@@ -115,12 +115,60 @@ VEHICLES = [
     ),
 ]
 
+STAFF_MEMBERS = [
+    (
+        "Emily",
+        "Carter",
+        "ecarter",
+        "emily.carter@carrental.com",
+        "Manager",
+        "317-555-3101",
+        "410 Meridian St, Indianapolis, IN",
+    ),
+    (
+        "Marcus",
+        "Reed",
+        "mreed",
+        "marcus.reed@carrental.com",
+        "Rental Agent",
+        "317-555-3102",
+        "92 Pine St, Carmel, IN",
+    ),
+    (
+        "Sofia",
+        "Lopez",
+        "slopez",
+        "sofia.lopez@carrental.com",
+        "Rental Agent",
+        "812-555-3103",
+        "55 Grant St, Bloomington, IN",
+    ),
+    (
+        "Tyler",
+        "Brooks",
+        "tbrooks",
+        "tyler.brooks@carrental.com",
+        "Customer Support",
+        "463-555-3104",
+        "711 Center St, Plainfield, IN",
+    ),
+    (
+        "Hannah",
+        "Kim",
+        "hkim",
+        "hannah.kim@carrental.com",
+        "Supervisor",
+        "317-555-3105",
+        "28 Cedar Dr, Indianapolis, IN",
+    ),
+]
+
 RENTALS = [
-    (1, 1, "2026-03-01", "2026-03-04", "2026-03-04", 28450, 28710, "Completed", 164.97),
-    (2, 2, "2026-03-05", "2026-03-08", "2026-03-08", 31220, 31405, "Completed", 149.97),
-    (3, 3, "2026-03-10", "2026-03-13", None, 19870, None, "Active", 194.97),
-    (4, 5, "2026-03-12", "2026-03-14", "2026-03-14", 25640, 25900, "Completed", 105.50),
-    (5, 1, "2026-03-15", "2026-03-17", "2026-03-17", 28710, 28860, "Completed", 109.98),
+    (1, 1, 1, "2026-03-01", "2026-03-04", "2026-03-04", 28450, 28710, "Completed", 164.97),
+    (2, 2, 2, "2026-03-05", "2026-03-08", "2026-03-08", 31220, 31405, "Completed", 149.97),
+    (3, 3, 3, "2026-03-10", "2026-03-13", None, 19870, None, "Active", 194.97),
+    (4, 5, 4, "2026-03-12", "2026-03-14", "2026-03-14", 25640, 25900, "Completed", 105.50),
+    (5, 1, 5, "2026-03-15", "2026-03-17", "2026-03-17", 28710, 28860, "Completed", 109.98),
 ]
 
 PAYMENTS = [
@@ -139,7 +187,7 @@ def seed_database():
     try:
         cursor = connection.cursor()
 
-        table_order = ["Payment", "Rental", "Vehicle", "Customer", "Location"]
+        table_order = ["Payment", "Rental", "Staff", "Vehicle", "Customer", "Location"]
         for table_name in table_order:
             cursor.execute(f"DELETE FROM {table_name}")
 
@@ -174,11 +222,21 @@ def seed_database():
 
         cursor.executemany(
             """
+            INSERT INTO Staff (
+                first_name, last_name, username, email, role, phone, address
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            STAFF_MEMBERS,
+        )
+
+        cursor.executemany(
+            """
             INSERT INTO Rental (
-                customer_id, vehicle_id, checkout_date, due_date, return_date,
+                customer_id, vehicle_id, staff_id, checkout_date, due_date, return_date,
                 checkout_mileage, return_mileage, rental_status, total_cost
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             RENTALS,
         )

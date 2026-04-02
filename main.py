@@ -10,7 +10,7 @@ def home():
     connection = get_connection()
 
     table_counts = {}
-    tables = ["Customer", "Location", "Vehicle", "Rental", "Payment"]
+    tables = ["Customer", "Staff", "Location", "Vehicle", "Rental", "Payment"]
 
     try:
         for table_name in tables:
@@ -26,6 +26,7 @@ def home():
         f"<p>Connected to <strong>{DATABASE_NAME}</strong>.</p>"
         "<ul>"
         f"<li>Customers: {table_counts['Customer']}</li>"
+        f"<li>Staff: {table_counts['Staff']}</li>"
         f"<li>Locations: {table_counts['Location']}</li>"
         f"<li>Vehicles: {table_counts['Vehicle']}</li>"
         f"<li>Rentals: {table_counts['Rental']}</li>"

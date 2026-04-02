@@ -51,10 +51,23 @@ SCHEMA_STATEMENTS = [
     );
     """,
     """
+    CREATE TABLE IF NOT EXISTS Staff (
+        staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        username TEXT NOT NULL UNIQUE,
+        email TEXT NOT NULL UNIQUE,
+        role TEXT NOT NULL,
+        phone TEXT NOT NULL,
+        address TEXT NOT NULL
+    );
+    """,
+    """
     CREATE TABLE IF NOT EXISTS Rental (
         rental_id INTEGER PRIMARY KEY AUTOINCREMENT,
         customer_id INTEGER NOT NULL,
         vehicle_id INTEGER NOT NULL,
+        staff_id INTEGER NOT NULL,
         checkout_date TEXT NOT NULL,
         due_date TEXT NOT NULL,
         return_date TEXT,
@@ -63,7 +76,8 @@ SCHEMA_STATEMENTS = [
         rental_status TEXT NOT NULL,
         total_cost REAL NOT NULL,
         FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
-        FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
+        FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id),
+        FOREIGN KEY (staff_id) REFERENCES Staff(staff_id)
     );
     """,
     """
@@ -85,6 +99,9 @@ def create_tables():
 
     try:
         cursor = connection.cursor()
+        drop_order = ["Payment", "Rental", "Staff", "Vehicle", "Customer", "Location"]
+        for table_name in drop_order:
+            cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
         for statement in SCHEMA_STATEMENTS:
             cursor.execute(statement)
         connection.commit()
