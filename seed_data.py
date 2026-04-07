@@ -163,6 +163,14 @@ STAFF_MEMBERS = [
     ),
 ]
 
+RESERVATIONS = [
+    (1, 2, "2026-03-18", "2026-03-20", "2026-03-23", "Confirmed", 149.97),
+    (2, 4, "2026-03-19", "2026-03-22", "2026-03-24", "Pending", 95.00),
+    (3, 5, "2026-03-20", "2026-03-25", "2026-03-28", "Confirmed", 158.25),
+    (4, 1, "2026-03-21", "2026-03-26", "2026-03-27", "Completed", 109.98),
+    (5, 3, "2026-03-22", "2026-03-29", "2026-03-31", "Confirmed", 129.98),
+]
+
 RENTALS = [
     (1, 1, 1, "2026-03-01", "2026-03-04", "2026-03-04", 28450, 28710, "Completed", 164.97),
     (2, 2, 2, "2026-03-05", "2026-03-08", "2026-03-08", 31220, 31405, "Completed", 149.97),
@@ -187,7 +195,15 @@ def seed_database():
     try:
         cursor = connection.cursor()
 
-        table_order = ["Payment", "Rental", "Staff", "Vehicle", "Customer", "Location"]
+        table_order = [
+            "Payment",
+            "Rental",
+            "Reservation",
+            "Staff",
+            "Vehicle",
+            "Customer",
+            "Location",
+        ]
         for table_name in table_order:
             cursor.execute(f"DELETE FROM {table_name}")
 
@@ -228,6 +244,17 @@ def seed_database():
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             STAFF_MEMBERS,
+        )
+
+        cursor.executemany(
+            """
+            INSERT INTO Reservation (
+                customer_id, vehicle_id, reservation_date, pickup_date, return_date,
+                reservation_status, estimated_total
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            RESERVATIONS,
         )
 
         cursor.executemany(

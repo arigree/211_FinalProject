@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f7f7f7;
+            color: #222;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e9ecef;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            color: #b02a37;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vehicle List</h1>
+
+    {% if error_message %}
+        <p class="message">{{ error_message }}</p>
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Vehicle ID</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>License Plate</th>
+                <th>Mileage</th>
+                <th>Daily Rate</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ vehicle.vehicle_id }}</td>
+                    <td>{{ vehicle.make }}</td>
+                    <td>{{ vehicle.model }}</td>
+                    <td>{{ vehicle.year }}</td>
+                    <td>{{ vehicle.color }}</td>
+                    <td>{{ vehicle.license_plate }}</td>
+                    <td>{{ vehicle.mileage }}</td>
+                    <td>${{ "%.2f"|format(vehicle.daily_rate) }}</td>
+                    <td>{{ vehicle.status }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">No vehicles found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
