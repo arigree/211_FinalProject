@@ -2,7 +2,7 @@ from flask import Flask
 
 from database import DATABASE_URI
 from extensions import db
-from app.vehicle import vehicle_bp
+from app.customer import customer_bp
 
 
 def create_app():
@@ -11,14 +11,14 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
-    app.register_blueprint(vehicle_bp)
+    app.register_blueprint(customer_bp)
 
     @app.route("/")
     def home():
         return (
             "<h1>Car Rental System</h1>"
-            '<p>Phase 2 Vehicle domain is ready.</p>'
-            '<p><a href="/vehicles">View Vehicles</a></p>'
+            '<p>Phase 2 Customer domain is ready.</p>'
+            '<p><a href="/customers">View Customers</a></p>'
         )
 
     return app

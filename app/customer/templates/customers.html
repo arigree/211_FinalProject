@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers</title>
+    <link rel="stylesheet" href="{{ url_for('customer.static', filename='customer.css') }}">
+</head>
+<body>
+    <h1>Customer List</h1>
+    <p><a href="/">Back to Home</a></p>
+
+    {% if error_message %}
+        <p class="message">{{ error_message }}</p>
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Driver License</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer_id }}</td>
+                    <td>{{ customer.first_name }}</td>
+                    <td>{{ customer.last_name }}</td>
+                    <td>{{ customer.phone }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.driver_license_number }}</td>
+                    <td>{{ customer.address }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">No customers found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
