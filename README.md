@@ -1,8 +1,10 @@
 # Car Rental System - Phase 2
 
-## Team Member Contributions
+This project is a Flask car rental system for INFO-I 211.
 
-- Khoutoub: completed the customer domain for Phase 2, including the model, manager, controller, exceptions file, template, route, and testing setup.
-- Arissa: completed shared setup work for the Flask project structure and GitHub repository setup.
-- Nathanial: will complete another project domain and help with integration.
+For Phase 2, the project includes:
 
+- a Flask app organized with Blueprints
+- a SQLite database connection
+- a customer domain with a model, manager, controller, template, and exception handling
+- a customer list page at `/customers`
