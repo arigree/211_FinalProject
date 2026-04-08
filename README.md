@@ -1,50 +1,41 @@
 # Car Rental System - Phase 2
 
-## Team Member Contributions
+This project is a Flask car rental system for INFO-I 211. For Phase 2, our team set up the app structure, connected the project to SQLite, and added a customer page that displays data from the database.
 
-- Khoutoub: completed the customer domain for Phase 2, including the model, manager, controller, exceptions file, template, route, and testing setup.
-- Arissa: completed shared setup work for the Flask project structure and GitHub repository setup.
-- Nathanial: will complete another project domain and help with integration.
+## Team Contributions
 
-## Instructions for Installing Dependencies
+- Khoutoub worked on the customer domain.
+- Arissa worked on the shared Flask setup and GitHub setup.
+- Nathanial is helping with the other domain work and integration.
 
-1. Open the project folder in a terminal.
-2. Install the required packages:
+## Current Phase 2 Work
+
+- Flask app structure with Blueprints
+- SQLite database connection
+- Customer model, manager, controller, template, and exceptions
+- Customer list page at `/customers`
+
+## Running the Project
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Phase 2 Features Implemented and How to Test Them
-
-- The project is connected to the SQLite database `car_rental.db`.
-- The customer domain has been implemented using Flask Blueprints and Flask-SQLAlchemy.
-- The application displays customer records from the database on a dynamic web page.
-
-To test the current Phase 2 work:
-
-1. Open the project folder in a terminal.
-2. Run the app:
+Run the app:
 
 ```bash
 python3 main.py
 ```
 
-3. If port 5000 is busy, run:
+If port 5000 is already in use, run:
 
 ```bash
 python3 -c "from app import create_app; app = create_app(); app.run(debug=True, port=5001)"
 ```
 
-4. Open the browser and visit:
+Then open:
 
 - `http://127.0.0.1:5000/customers`
-- or `http://127.0.0.1:5001/customers` if using port 5001
-
-The page should display a list of customers from the database.
-
-## Notes for Instructor and TA
-
-- This Phase 2 submission currently includes the customer domain.
-- The project uses MVC structure, Flask Blueprints, Flask-SQLAlchemy, and exception handling for the customer page.
-- The team is continuing to add the remaining domains required for the full Phase 2 project.
+- or `http://127.0.0.1:5001/customers`

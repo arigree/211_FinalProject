@@ -17,8 +17,8 @@ def create_app():
     def home():
         return (
             "<h1>Car Rental System</h1>"
-            '<p>Phase 2 Customer domain is ready.</p>'
-            '<p><a href="/customers">View Customers</a></p>'
+            '<p>This page links to the customer list for Phase 2.</p>'
+            '<p><a href="/customers">Go to Customers</a></p>'
         )
 
     return app
