@@ -8,3 +8,4 @@ For Phase 2, the project includes:
 - a SQLite database connection
 - a customer domain with a model, manager, controller, template, and exception handling
 - a customer list page at `/customers`
+- test
