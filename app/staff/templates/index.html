@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff List</title>
+
+    <!-- Link to staff CSS -->
+    <link rel="stylesheet" href="{{ url_for('staff.static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Staff Directory</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if staff_members %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+
+        {% for staff in staff_members %}
+        <tr>
+            <td>{{ staff.staff_id }}</td>
+            <td>
+                <a href="{{ url_for('staff.detail', staff_id=staff.staff_id) }}">
+                    {{ staff.first_name }} {{ staff.last_name }}
+                </a>
+            </td>
+            <td>{{ staff.username }}</td>
+            <td>{{ staff.role }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No staff members found.</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
