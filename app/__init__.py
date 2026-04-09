@@ -3,7 +3,7 @@ from flask import Flask
 from database import DATABASE_URI
 from extensions import db
 from app.customer import customer_bp
-
+from app.staff import bp as staff_bp
 
 def create_app():
     app = Flask(__name__)
@@ -12,6 +12,7 @@ def create_app():
 
     db.init_app(app)
     app.register_blueprint(customer_bp)
+    app.register_blueprint(staff_bp)
 
     @app.route("/")
     def home():
