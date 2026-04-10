@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations</title>
+    <link rel="stylesheet" href="{{ url_for('location.static', filename='locations.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="card">
+            <div class="header">
+                <div>
+                    <p class="eyebrow">Car Rental Domain</p>
+                    <h1>Location List</h1>
+                    <p class="subtitle">All branch locations currently stored in the database.</p>
+                </div>
+
+                <a class="home-link" href="/">Back to Home</a>
+            </div>
+
+            {% if error_message %}
+                <p class="message error">{{ error_message }}</p>
+            {% endif %}
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Location ID</th>
+                            <th>Location Name</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for location in locations %}
+                            <tr>
+                                <td>{{ location.location_id }}</td>
+                                <td>{{ location.location_name }}</td>
+                                <td>{{ location.city }}</td>
+                                <td>{{ location.state }}</td>
+                                <td>{{ location.phone_number }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="empty">No locations found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

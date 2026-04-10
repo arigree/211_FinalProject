@@ -12,14 +12,12 @@ class StaffController:
     def index():
         result = StaffManager.get_staff_members()
         if isinstance(result, str):
-            return render_template('errors/404.html', error=result)
-        else:
-            return render_template('staff/index.html', staff_members=result)
+            return render_template('index.html', error=result, staff_members=[])
+        return render_template('index.html', staff_members=result, error = None)
 
     @staticmethod
     def detail(staff_id: int):
         result = StaffManager.get_staff_member(staff_id)
         if isinstance(result, str):
-            return render_template('errors/404.html', error=result)
-        else:
-            return render_template('staff/detail.html', staff=result)
+            return render_template('detail.html', error=result, staff=None)
+        return render_template('detail.html', staff=result, error=None)

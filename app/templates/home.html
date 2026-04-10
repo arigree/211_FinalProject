@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="card">
+            <h1>Car Rental System</h1>
+            <p class="subtitle">Welcome to the application</p>
+
+            <div class="nav-links">
+                <a href="/customers">View Customers</a>
+                <a href="/locations">View Locations</a>
+                <a href="{{ url_for('staff.index') }}">View Staff</a>
+
+            </div>
+        </section>
+    </main>
+</body>
+</html>
