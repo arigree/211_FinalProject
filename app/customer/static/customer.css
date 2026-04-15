@@ -14,6 +14,69 @@ a {
     text-decoration: none;
 }
 
+.filter-form {
+    background-color: #fff;
+    border: 1px solid #d9dee5;
+    border-radius: 8px;
+    padding: 18px;
+    margin-top: 18px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 160px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-group select,
+.form-group input {
+    padding: 10px;
+    border: 1px solid #c5ccd5;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+button {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0b5ed7;
+}
+
+.reset-link {
+    font-weight: bold;
+}
+
+.results-count {
+    margin-top: 16px;
+    font-weight: bold;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
