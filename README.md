@@ -9,7 +9,7 @@ This project is a Flask car rental system for INFO-I 211.
 - In the terminal, type: `pip install -r requirements.txt`
 
 ### Phase 3 Feature Completed So Far
-- Member 1 feature completed on the Customer domain
+- I completed the Member 1 feature on the Customer domain
 - Filtering by city
 - Filtering by phone area code
 - Sorting by customer ID, first name, or last name
@@ -17,7 +17,7 @@ This project is a Flask car rental system for INFO-I 211.
 - Limiting the number of results returned
 - User-friendly validation for invalid query input
 
-### How to Test Khoutoub's Phase 3 Work
+### How to Test My Phase 3 Work
 - Start the application with: `python3 main.py`
 - Open the home page: `http://127.0.0.1:5000/`
 - Open the customer page: `http://127.0.0.1:5000/customers`
@@ -35,5 +35,5 @@ This project is a Flask car rental system for INFO-I 211.
 - [GitHub]('https://github.com/arigree/211_FinalProject')
 
 ### Notes for Instructor and TA
-- This README currently documents only Khoutoub's completed Phase 3 contribution.
-- The customer feature was implemented across routes, controller, manager, template, and exception handling layers.
+- This README currently documents only my completed Phase 3 contribution.
+- I implemented the customer feature across routes, controller, manager, template, and exception handling layers.
