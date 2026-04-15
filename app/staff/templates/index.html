@@ -12,11 +12,15 @@
 
 <div class="container">
     <h1>Staff Directory</h1>
-
-    <form method="GET" action="{{ url_for('staff.search') }}">
+    <div class="seperate">
+         <form method="GET" action="{{ url_for('staff.search') }}">
         <input type="text" name="q" placeholder="Search staff" value="{{ query or '' }}">
-        <button type="submit">Search</button>
+        <button type="submit" class="submit">Search</button>
     </form>
+
+    <a class="home-link" href="/">Back to Home</a>
+    </div>
+
 
     {% if error %}
         <p class="error">{{ error }}</p>

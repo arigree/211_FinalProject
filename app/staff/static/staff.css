@@ -16,6 +16,26 @@ h1 {
     color: #2f3640;
 }
 
+.seperate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.submit{
+    background-color: #273c75;
+    color: white;
+    padding: 3px;
+    border: none;
+}
+
+.home-link {
+    background-color: #273c75;
+    color: white;
+    padding: 10px
+
+}
+
 /* Table styling */
 table {
     width: 100%;
@@ -23,6 +43,8 @@ table {
     background-color: white;
     margin-top: 20px;
 }
+
+
 
 table th {
     background-color: #273c75;
