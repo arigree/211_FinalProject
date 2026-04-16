@@ -26,7 +26,11 @@ _______________________
 - Backspacing will automatically clear search query
 
 ### Querying Related Data (ORM Relationships)
-- 
+- Open the staff page: `http://127.0.0.1:5000/staff`
+- Select any staff member to view their details
+- Click "View Rentals" to access related rental data
+- This page displays all rentals handled by the selected staff member
+- Each rental also shows related customer information retrieved through ORM relationships
 
 
 ## Notes for Instructor and TA
