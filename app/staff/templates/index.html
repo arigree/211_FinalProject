@@ -10,6 +10,14 @@
 
 <div id="main-header">Staff Directory</div>
 <hr>
+<div class="container">
+<div class="seperate">
+   <form method="GET" action="{{ url_for('staff.search') }}">
+        <input type="text" name="q" placeholder="Search staff" value="{{ query or '' }}">
+        <button type="submit" class="submit">Search</button>
+    </form>
+    <a class="home-link" href="/">Back to Home</a>
+</div>
 
 {% if staff_members %}
 <table>
@@ -40,6 +48,8 @@
 {% else %}
     <p>No staff members found.</p>
 {% endif %}
+
+</div>
 
 </body>
 </html>
