@@ -3,12 +3,15 @@
 # File: staff_manager.py
 # Description: Define the StaffManager class
 
+
 from typing import Union
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import select, or_
 from extensions import db
 from .staff import Staff
+from .rental import Rental
 from .staff_exceptions import *
+
 
 class StaffManager:
     @staticmethod
@@ -64,6 +67,25 @@ class StaffManager:
                 raise StaffNotFoundException("No staff members matched your search")
 
             return results
+
+        except Exception as e:
+            return StaffManager.handle_exceptions(e)
+
+    @staticmethod
+    def get_staff_rentals(staff_id: int):
+        try:
+            staff_member = db.session.get(Staff, staff_id)
+            if not staff_member:
+                raise StaffNotFoundException(f"Staff member with ID {staff_id} not found")
+
+            rentals = (
+                db.session.query(Rental)
+                .filter(Rental.staff_id == staff_id)
+                .order_by(Rental.checkout_date.desc())
+                .all()
+            )
+
+            return staff_member, rentals
 
         except Exception as e:
             return StaffManager.handle_exceptions(e)

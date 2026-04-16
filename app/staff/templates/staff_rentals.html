@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Rentals</title>
+    <link rel="stylesheet" href="{{ url_for('staff.static', filename='staff.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+    {% if staff %}
+        <h1>Rentals for {{ staff.first_name }} {{ staff.last_name }}</h1>
+
+        <div class="card">
+            <p><strong>Staff ID:</strong> {{ staff.staff_id }}</p>
+            <p><strong>Name:</strong> {{ staff.first_name }} {{ staff.last_name }}</p>
+            <p><strong>Role:</strong> {{ staff.role }}</p>
+            <p><strong>Total Rentals:</strong> {{ staff.rentals|length }}</p>
+        </div>
+
+        {% if staff.rentals %}
+            <table>
+                <tr>
+                    <th>Rental ID</th>
+                    <th>Customer</th>
+                    <th>Vehicle ID</th>
+                    <th>Checkout Date</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Total Cost</th>
+                </tr>
+
+                {% for rental in staff.rentals %}
+                <tr>
+                    <td>{{ rental.rental_id }}</td>
+                    <td>{{ rental.customer.first_name }} {{ rental.customer.last_name }}</td>
+                    <td>{{ rental.vehicle_id }}</td>
+                    <td>{{ rental.checkout_date }}</td>
+                    <td>{{ rental.due_date }}</td>
+                    <td>{{ rental.rental_status }}</td>
+                    <td>${{ rental.total_cost }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No rentals found for this staff member.</p>
+        {% endif %}
+
+        <a class="btn" href="{{ url_for('staff.detail', staff_id=staff.staff_id) }}">Back to Staff Details</a>
+        <a class="btn" href="{{ url_for('staff.index') }}">Back to Staff List</a>
+    {% else %}
+        <p class="error">Staff member not found.</p>
+        <a class="btn" href="{{ url_for('staff.index') }}">Back to Staff List</a>
+    {% endif %}
+</div>
+
+</body>
+</html>

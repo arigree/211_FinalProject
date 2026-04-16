@@ -22,6 +22,11 @@ class StaffController:
         return render_template("detail.html", staff=result, error=None)
 
     @staticmethod
+    def rentals(staff_id):
+        staff = StaffManager.get_staff_rentals(staff_id)
+        return render_template("staff_rentals.html", staff=staff)
+
+    @staticmethod
     def search():
         q = request.args.get("q", "")
         result = StaffManager.search_staff_members(q)

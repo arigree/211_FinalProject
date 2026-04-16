@@ -16,6 +16,10 @@ def index():
 def detail(staff_id):
     return StaffController.detail(staff_id)
 
+@bp.route("/<int:staff_id>/rentals")
+def rentals(staff_id):
+    return StaffController.rentals(staff_id)
+
 @bp.route("/search")
 def search():
     return StaffController.search()

@@ -12,5 +12,7 @@ class Customer(db.Model):
     driver_license_number = db.Column(db.String(50), nullable=False, unique=True)
     address = db.Column(db.String(200), nullable=False)
 
+    rentals = db.relationship("Rental", backref="customer", lazy=True)
+
     def __repr__(self):
         return f"<Customer {self.customer_id}: {self.first_name} {self.last_name}>"
