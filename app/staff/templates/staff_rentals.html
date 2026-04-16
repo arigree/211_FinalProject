@@ -16,10 +16,10 @@
             <p><strong>Staff ID:</strong> {{ staff.staff_id }}</p>
             <p><strong>Name:</strong> {{ staff.first_name }} {{ staff.last_name }}</p>
             <p><strong>Role:</strong> {{ staff.role }}</p>
-            <p><strong>Total Rentals:</strong> {{ staff.rentals|length }}</p>
+            <p><strong>Total Rentals:</strong> {{ rentals|length }}</p>
         </div>
 
-        {% if staff.rentals %}
+        {% if rentals %}
             <table>
                 <tr>
                     <th>Rental ID</th>
@@ -31,7 +31,7 @@
                     <th>Total Cost</th>
                 </tr>
 
-                {% for rental in staff.rentals %}
+                {% for rental in rentals %}
                 <tr>
                     <td>{{ rental.rental_id }}</td>
                     <td>{{ rental.customer.first_name }} {{ rental.customer.last_name }}</td>

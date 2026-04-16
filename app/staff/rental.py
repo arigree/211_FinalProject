@@ -1,7 +1,7 @@
 # Author: Nathaniel Adewara
 # Date: 4/15/2026
 # File: rental.py
-# Description:
+# Description: Define the rental model class
 from extensions import db
 
 
