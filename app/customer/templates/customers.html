@@ -7,103 +7,109 @@
     <link rel="stylesheet" href="{{ url_for('customer.static', filename='customer.css') }}">
 </head>
 <body>
-    <h1>Customer List</h1>
-    <p><a href="/">Back to Home</a></p>
+    <main class="page">
+        <section class="card">
+            <div class="header">
+                <div>
+                    <p class="eyebrow">Car Rental System</p>
+                    <h1>Customer List</h1>
+                    <p class="subtitle">Customers currently stored in the database.</p>
+                </div>
 
-    {% if error_message %}
-        <p class="message">{{ error_message }}</p>
-    {% endif %}
-
-    <form class="filter-form" method="get" action="{{ url_for('customer.show_customers') }}">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="city">City</label>
-                <select id="city" name="city">
-                    <option value="">All cities</option>
-                    <option value="Indianapolis" {% if current_filters.city == 'Indianapolis' %}selected{% endif %}>Indianapolis</option>
-                    <option value="Carmel" {% if current_filters.city == 'Carmel' %}selected{% endif %}>Carmel</option>
-                    <option value="Bloomington" {% if current_filters.city == 'Bloomington' %}selected{% endif %}>Bloomington</option>
-                    <option value="Plainfield" {% if current_filters.city == 'Plainfield' %}selected{% endif %}>Plainfield</option>
-                </select>
+                <a class="home-link" href="/">Back to Home</a>
             </div>
 
-            <div class="form-group">
-                <label for="area_code">Phone Area Code</label>
-                <select id="area_code" name="area_code">
-                    <option value="">All area codes</option>
-                    <option value="317" {% if current_filters.area_code == '317' %}selected{% endif %}>317</option>
-                    <option value="463" {% if current_filters.area_code == '463' %}selected{% endif %}>463</option>
-                    <option value="812" {% if current_filters.area_code == '812' %}selected{% endif %}>812</option>
-                </select>
+            {% if error_message %}
+                <p class="message error">{{ error_message }}</p>
+            {% endif %}
+
+            <form class="filter-form" method="get" action="{{ url_for('customer.show_customers') }}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <select id="city" name="city">
+                            <option value="">All cities</option>
+                            <option value="Indianapolis" {% if current_filters.city == 'Indianapolis' %}selected{% endif %}>Indianapolis</option>
+                            <option value="Carmel" {% if current_filters.city == 'Carmel' %}selected{% endif %}>Carmel</option>
+                            <option value="Bloomington" {% if current_filters.city == 'Bloomington' %}selected{% endif %}>Bloomington</option>
+                            <option value="Plainfield" {% if current_filters.city == 'Plainfield' %}selected{% endif %}>Plainfield</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area_code">Phone Area Code</label>
+                        <select id="area_code" name="area_code">
+                            <option value="">All area codes</option>
+                            <option value="317" {% if current_filters.area_code == '317' %}selected{% endif %}>317</option>
+                            <option value="463" {% if current_filters.area_code == '463' %}selected{% endif %}>463</option>
+                            <option value="812" {% if current_filters.area_code == '812' %}selected{% endif %}>812</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sort_by">Sort By</label>
+                        <select id="sort_by" name="sort_by">
+                            <option value="customer_id" {% if current_filters.sort_by == 'customer_id' %}selected{% endif %}>Customer ID</option>
+                            <option value="first_name" {% if current_filters.sort_by == 'first_name' %}selected{% endif %}>First Name</option>
+                            <option value="last_name" {% if current_filters.sort_by == 'last_name' %}selected{% endif %}>Last Name</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order">Order</label>
+                        <select id="order" name="order">
+                            <option value="asc" {% if current_filters.order == 'asc' %}selected{% endif %}>Ascending</option>
+                            <option value="desc" {% if current_filters.order == 'desc' %}selected{% endif %}>Descending</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="limit">Limit</label>
+                        <input id="limit" name="limit" type="number" min="1" placeholder="All results" value="{{ current_filters.limit }}">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit">Apply Filters</button>
+                    <a class="reset-link" href="{{ url_for('customer.show_customers') }}">Reset</a>
+                </div>
+            </form>
+
+            <p class="results-count">Showing {{ customers|length }} customer{% if customers|length != 1 %}s{% endif %}.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Driver License</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for customer in customers %}
+                            <tr>
+                                <td>{{ customer.customer_id }}</td>
+                                <td>{{ customer.first_name }}</td>
+                                <td>{{ customer.last_name }}</td>
+                                <td>{{ customer.phone }}</td>
+                                <td>{{ customer.email }}</td>
+                                <td>{{ customer.driver_license_number }}</td>
+                                <td>{{ customer.address }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="empty">No customers found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-
-            <div class="form-group">
-                <label for="sort_by">Sort By</label>
-                <select id="sort_by" name="sort_by">
-                    <option value="customer_id" {% if current_filters.sort_by == 'customer_id' %}selected{% endif %}>Customer ID</option>
-                    <option value="first_name" {% if current_filters.sort_by == 'first_name' %}selected{% endif %}>First Name</option>
-                    <option value="last_name" {% if current_filters.sort_by == 'last_name' %}selected{% endif %}>Last Name</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="order">Order</label>
-                <select id="order" name="order">
-                    <option value="asc" {% if current_filters.order == 'asc' %}selected{% endif %}>Ascending</option>
-                    <option value="desc" {% if current_filters.order == 'desc' %}selected{% endif %}>Descending</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="limit">Limit</label>
-                <input
-                    id="limit"
-                    name="limit"
-                    type="number"
-                    min="1"
-                    placeholder="All results"
-                    value="{{ current_filters.limit }}"
-                >
-            </div>
-        </div>
-
-        <div class="actions">
-            <button type="submit">Apply Filters</button>
-            <a class="reset-link" href="{{ url_for('customer.show_customers') }}">Reset</a>
-        </div>
-    </form>
-
-    <p class="results-count">Showing {{ customers|length }} customer{% if customers|length != 1 %}s{% endif %}.</p>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Customer ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Driver License</th>
-                <th>Address</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for customer in customers %}
-                <tr>
-                    <td>{{ customer.customer_id }}</td>
-                    <td>{{ customer.first_name }}</td>
-                    <td>{{ customer.last_name }}</td>
-                    <td>{{ customer.phone }}</td>
-                    <td>{{ customer.email }}</td>
-                    <td>{{ customer.driver_license_number }}</td>
-                    <td>{{ customer.address }}</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="7">No customers found.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        </section>
+    </main>
 </body>
 </html>

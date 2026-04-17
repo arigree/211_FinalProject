@@ -3,10 +3,10 @@
 # File: location_controller.py
 # Description:
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 from .location_exceptions import LocationDataError
-from .location_manager import get_all_locations
+from .location_manager import get_all_locations, search_locations
 
 # Blueprint setup
 location_bp = Blueprint(
@@ -23,6 +23,24 @@ def show_locations():
     locations = get_all_locations()
     return render_template("locations.html", locations=locations)
 
+@location_bp.route("/locations/search")
+def search():
+    query_text = request.args.get("q", "")
+
+    try:
+        locations = search_locations(query_text)
+        return render_template(
+            "locations.html",
+            locations=locations,
+            query=query_text,
+        )
+    except LocationDataError as error:
+        return render_template(
+            "locations.html",
+            locations=[],
+            query=query_text,
+            error_message=str(error),
+        ), 500
 
 @location_bp.errorhandler(LocationDataError)
 def handle_location_data_error(error):

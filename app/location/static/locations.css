@@ -1,4 +1,3 @@
-/*Color Pallette*/
 :root {
     --bg: #f4f7fb;
     --card: #ffffff;
@@ -67,6 +66,49 @@ h1 {
     margin: 10px 0 0;
     color: var(--muted);
     font-size: 0.98rem;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 18px 0 20px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    flex: 1;
+    min-width: 240px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.search-button {
+    border: none;
+    background: var(--accent);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background: var(--accent-dark);
+}
+
+.clear-link {
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--accent);
 }
 
 .home-link {

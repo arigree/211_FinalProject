@@ -20,10 +20,10 @@ _______________________
 - Test invalid input handling: `http://127.0.0.1:5000/customers?limit=0`
 
 ### Searching Functionality
-- Open the staff page: `http://127.0.0.1:5000/staff`
-- Enter a name, or other detail, into the search bar
-- Select 'Search'
-- Backspacing will automatically clear search query
+- Open the location page: `http://127.0.0.1:5000/locations`
+- Enter a location name, or other detail, into the search bar
+- Select 'Search' or hit enter
+- To clear a search query, hit the clear button or backspace your text and hit enter
 
 ### Querying Related Data (ORM Relationships)
 - Open the staff page: `http://127.0.0.1:5000/staff`
@@ -34,3 +34,4 @@ _______________________
 
 
 ## Notes for Instructor and TA
+- Styling across pages will be implemented in the final product

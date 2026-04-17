@@ -11,13 +11,25 @@
         <section class="card">
             <div class="header">
                 <div>
-                    <p class="eyebrow">Car Rental Domain</p>
+                    <p class="eyebrow">Car Rental System</p>
                     <h1>Location List</h1>
                     <p class="subtitle">All branch locations currently stored in the database.</p>
                 </div>
 
                 <a class="home-link" href="/">Back to Home</a>
             </div>
+
+            <form class="search-form" method="GET" action="{{ url_for('location.search') }}">
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ query or '' }}"
+                    placeholder="Search by name, city, state, or phone..."
+                    class="search-input"
+                >
+                <button type="submit" class="search-button">Search</button>
+                <a class="clear-link" href="{{ url_for('location.show_locations') }}">Clear</a>
+            </form>
 
             {% if error_message %}
                 <p class="message error">{{ error_message }}</p>
