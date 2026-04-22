@@ -2,54 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Rentals</title>
     <link rel="stylesheet" href="{{ url_for('staff.static', filename='staff.css') }}">
 </head>
 <body>
-<div class="container">
-    {% if staff %}
-        <h1>Rentals for {{ staff.first_name }} {{ staff.last_name }}</h1>
+    <main class="page">
+        <section class="card">
+            <div class="header">
+                <div>
+                    <p class="eyebrow">Car Rental System</p>
+                    <h1>Staff Rentals</h1>
+                    <p class="subtitle">Rental records handled by {{ staff.first_name }} {{ staff.last_name }}.</p>
+                </div>
 
-        <div class="card">
-            <p><strong>Staff ID:</strong> {{ staff.staff_id }}</p>
-            <p><strong>Name:</strong> {{ staff.first_name }} {{ staff.last_name }}</p>
-            <p><strong>Role:</strong> {{ staff.role }}</p>
-            <p><strong>Total Rentals:</strong> {{ rentals|length }}</p>
-        </div>
+                <a class="home-link" href="{{ url_for('staff.index') }}">Back to Staff</a>
+            </div>
 
-        {% if rentals %}
-            <table>
-                <tr>
-                    <th>Rental ID</th>
-                    <th>Customer</th>
-                    <th>Vehicle ID</th>
-                    <th>Checkout Date</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Total Cost</th>
-                </tr>
-                {% for rental in rentals %}
-                    <tr>
-                        <td>{{ rental.rental_id }}</td>
-                        <td>{{ rental.customer.first_name }} {{ rental.customer.last_name }}</td>
-                        <td>{{ rental.vehicle_id }}</td>
-                        <td>{{ rental.checkout_date }}</td>
-                        <td>{{ rental.due_date }}</td>
-                        <td>{{ rental.rental_status }}</td>
-                        <td>${{ rental.total_cost }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% else %}
-            <p>No rentals found for this staff member.</p>
-        {% endif %}
+            {% if error_message %}
+                <p class="message error">{{ error_message }}</p>
+            {% endif %}
 
-        <a class="btn" href="{{ url_for('staff.detail', staff_id=staff.staff_id) }}">Back to Staff Details</a>
-        <a class="btn" href="{{ url_for('staff.index') }}">Back to Staff List</a>
-    {% else %}
-        <p class="error">Staff member not found.</p>
-        <a class="btn" href="{{ url_for('staff.index') }}">Back to Staff List</a>
-    {% endif %}
-</div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rental ID</th>
+                            <th>Customer ID</th>
+                            <th>Car ID</th>
+                            <th>Checkout Date</th>
+                            <th>Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rental in rentals %}
+                            <tr>
+                                <td>{{ rental.rental_id }}</td>
+                                <td>{{ rental.customer_id }}</td>
+                                <td>{{ rental.car_id }}</td>
+                                <td>{{ rental.checkout_date }}</td>
+                                <td>{{ rental.return_date }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="empty">No rental records found for this staff member.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

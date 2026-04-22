@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff</title>
+    <link rel="stylesheet" href="{{ url_for('staff.static', filename='staff.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="card">
+            <div class="header">
+                <div>
+                    <p class="eyebrow">Car Rental System</p>
+                    <h1>Staff List</h1>
+                    <p class="subtitle">Browse, search, create, update, and delete staff records.</p>
+                </div>
+
+                <a class="home-link" href="/">Back to Home</a>
+            </div>
+
+            {% if error_message %}
+                <p class="message error">{{ error_message }}</p>
+            {% endif %}
+
+            {% if status_message %}
+                <p class="message success">{{ status_message }}</p>
+            {% endif %}
+
+            <div class="top-actions">
+                <a class="primary-link" href="{{ url_for('staff.create') }}">Create Staff</a>
+            </div>
+
+            <form class="filter-form" method="get" action="{{ url_for('staff.search') }}">
+                <div class="form-row">
+                    <div class="form-group form-group-wide">
+                        <label for="query">Search Staff</label>
+                        <input id="query" name="query" type="text" placeholder="Search by name, username, email, role, phone, or address" value="{{ query if query else '' }}">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit">Search</button>
+                    <a class="reset-link" href="{{ url_for('staff.index') }}">Reset</a>
+                </div>
+            </form>
+
+            <p class="results-count">Showing {{ staff_members|length }} staff member{% if staff_members|length != 1 %}s{% endif %}.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Staff ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for staff in staff_members %}
+                            <tr>
+                                <td>{{ staff.staff_id }}</td>
+                                <td>{{ staff.first_name }}</td>
+                                <td>{{ staff.last_name }}</td>
+                                <td>{{ staff.username }}</td>
+                                <td>{{ staff.email }}</td>
+                                <td>{{ staff.role }}</td>
+                                <td>{{ staff.phone }}</td>
+                                <td>{{ staff.address }}</td>
+                                <td>
+                                    <div class="row-actions">
+                                        <a class="action-link" href="{{ url_for('staff.detail', staff_id=staff.staff_id) }}">Details</a>
+                                        <a class="action-link" href="{{ url_for('staff.edit', staff_id=staff.staff_id) }}">Edit</a>
+                                        <a class="action-link action-link-danger" href="{{ url_for('staff.delete', staff_id=staff.staff_id) }}">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="9" class="empty">No staff members found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

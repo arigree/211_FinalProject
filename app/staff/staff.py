@@ -4,7 +4,7 @@
 # Description: Define the staff model class
 from extensions import db
 
-
+# Define the Staff model class
 class Staff(db.Model):
     __tablename__ = 'Staff'
 

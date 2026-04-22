@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Staff</title>
+    <link rel="stylesheet" href="{{ url_for('staff.static', filename='staff.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="card">
+            <div class="header">
+                <div>
+                    <p class="eyebrow">Car Rental System</p>
+                    <h1>Delete Staff</h1>
+                    <p class="subtitle">Confirm that you want to remove this staff record.</p>
+                </div>
+
+                <a class="home-link" href="{{ url_for('staff.index') }}">Back to Staff</a>
+            </div>
+
+            {% if error_message %}
+                <p class="message error">{{ error_message }}</p>
+            {% endif %}
+
+            <div class="confirm-card">
+                <p><strong>Staff ID:</strong> {{ staff.staff_id }}</p>
+                <p><strong>Name:</strong> {{ staff.first_name }} {{ staff.last_name }}</p>
+                <p><strong>Username:</strong> {{ staff.username }}</p>
+                <p><strong>Email:</strong> {{ staff.email }}</p>
+                <p><strong>Role:</strong> {{ staff.role }}</p>
+                <p><strong>Phone:</strong> {{ staff.phone }}</p>
+                <p><strong>Address:</strong> {{ staff.address }}</p>
+            </div>
+
+            <form method="post" action="{{ url_for('staff.delete', staff_id=staff.staff_id) }}">
+                <div class="actions">
+                    <button class="danger-button" type="submit">Delete Staff</button>
+                    <a class="reset-link" href="{{ url_for('staff.index') }}">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
