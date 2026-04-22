@@ -18,8 +18,6 @@ class Staff(db.Model):
     address = db.Column(db.String(200))
     rentals = db.relationship("Rental", backref="staff", lazy=True)
 
-    rentals = db.relationship("Rental", backref="staff", lazy=True)
-
     def __init__(self, first_name, last_name, username, email, role, phone, address):
         self.first_name = first_name
         self.last_name = last_name
