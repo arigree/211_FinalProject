@@ -13,7 +13,5 @@ class Customer(db.Model):
     address = db.Column(db.String(200), nullable=False)
     rentals = db.relationship("Rental", backref="customer", lazy=True)
 
-    rentals = db.relationship("Rental", backref="customer", lazy=True)
-
     def __repr__(self):
         return f"<Customer {self.customer_id}: {self.first_name} {self.last_name}>"
