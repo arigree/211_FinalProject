@@ -12,11 +12,9 @@ class Rental(db.Model):
     customer_id = db.Column(db.Integer, db.ForeignKey("Customer.customer_id"), nullable=False)
     staff_id = db.Column(db.Integer, db.ForeignKey("Staff.staff_id"), nullable=False)
     vehicle_id = db.Column(db.Integer, db.ForeignKey("Vehicle.vehicle_id"), nullable=False)
-
     checkout_date = db.Column(db.String(50), nullable=False)
     due_date = db.Column(db.String(50), nullable=False)
     return_date = db.Column(db.String(50))
-
     rental_status = db.Column(db.String(50), nullable=False)
     total_cost = db.Column(db.Float, nullable=False)
 

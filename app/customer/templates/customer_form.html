@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('customer.static', filename='customer.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="card">
+            <div class="header">
+                <div>
+                    <p class="eyebrow">Car Rental System</p>
+                    <h1>{{ page_title }}</h1>
+                    <p class="subtitle">Enter customer details below.</p>
+                </div>
+
+                <a class="home-link" href="{{ url_for('customer.show_customers') }}">Back to Customers</a>
+            </div>
+
+            {% if error_message %}
+                <p class="message error">{{ error_message }}</p>
+            {% endif %}
+
+            <form class="customer-form" method="post" action="{{ form_action }}">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input id="first_name" name="first_name" type="text" value="{{ customer_data.first_name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input id="last_name" name="last_name" type="text" value="{{ customer_data.last_name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input id="phone" name="phone" type="text" value="{{ customer_data.phone }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" value="{{ customer_data.email }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="driver_license_number">Driver License Number</label>
+                        <input id="driver_license_number" name="driver_license_number" type="text" value="{{ customer_data.driver_license_number }}" required>
+                    </div>
+
+                    <div class="form-group form-group-wide">
+                        <label for="address">Address</label>
+                        <input id="address" name="address" type="text" value="{{ customer_data.address }}" required>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit">{{ submit_label }}</button>
+                    <a class="reset-link" href="{{ url_for('customer.show_customers') }}">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

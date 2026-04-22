@@ -5,9 +5,7 @@
     <title>Staff Rentals</title>
     <link rel="stylesheet" href="{{ url_for('staff.static', filename='staff.css') }}">
 </head>
-
 <body>
-
 <div class="container">
     {% if staff %}
         <h1>Rentals for {{ staff.first_name }} {{ staff.last_name }}</h1>
@@ -30,17 +28,16 @@
                     <th>Status</th>
                     <th>Total Cost</th>
                 </tr>
-
                 {% for rental in rentals %}
-                <tr>
-                    <td>{{ rental.rental_id }}</td>
-                    <td>{{ rental.customer.first_name }} {{ rental.customer.last_name }}</td>
-                    <td>{{ rental.vehicle_id }}</td>
-                    <td>{{ rental.checkout_date }}</td>
-                    <td>{{ rental.due_date }}</td>
-                    <td>{{ rental.rental_status }}</td>
-                    <td>${{ rental.total_cost }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ rental.rental_id }}</td>
+                        <td>{{ rental.customer.first_name }} {{ rental.customer.last_name }}</td>
+                        <td>{{ rental.vehicle_id }}</td>
+                        <td>{{ rental.checkout_date }}</td>
+                        <td>{{ rental.due_date }}</td>
+                        <td>{{ rental.rental_status }}</td>
+                        <td>${{ rental.total_cost }}</td>
+                    </tr>
                 {% endfor %}
             </table>
         {% else %}
@@ -54,6 +51,5 @@
         <a class="btn" href="{{ url_for('staff.index') }}">Back to Staff List</a>
     {% endif %}
 </div>
-
 </body>
 </html>

@@ -3,16 +3,18 @@
 # File: staff_manager.py
 # Description: Define the StaffManager class
 
-
 from typing import Union
+
+from sqlalchemy import or_, select
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import select, or_
+
 from extensions import db
-from .staff import Staff
+
 from .rental import Rental
+from .staff import Staff
 from .staff_exceptions import *
 
-# Staff Manager Class
+
 class StaffManager:
     @staticmethod
     def get_staff_members() -> list | str:
@@ -25,7 +27,6 @@ class StaffManager:
         except Exception as e:
             return StaffManager.handle_exceptions(e)
 
-    # Get staff member by ID
     @staticmethod
     def get_staff_member(staff_id: int) -> Union[Staff, str]:
         try:
@@ -37,7 +38,6 @@ class StaffManager:
         except Exception as e:
             return StaffManager.handle_exceptions(e)
 
-    # Search staff members
     @staticmethod
     def search_staff_members(search_text: str) -> list | str:
         try:
@@ -69,11 +69,9 @@ class StaffManager:
                 raise StaffNotFoundException("No staff members matched your search")
 
             return results
-
         except Exception as e:
             return StaffManager.handle_exceptions(e)
 
-    # Get staff member rentals
     @staticmethod
     def get_staff_rentals(staff_id: int):
         try:
@@ -89,11 +87,9 @@ class StaffManager:
             )
 
             return staff_member, rentals
-
         except Exception as e:
             return StaffManager.handle_exceptions(e)
 
-    # Handle exceptions
     @staticmethod
     def handle_exceptions(exception):
         db.session.rollback()

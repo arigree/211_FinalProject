@@ -1,7 +1,18 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, redirect, render_template, request, url_for
 
-from .customer_exceptions import CustomerDataError, CustomerQueryError
-from .customer_manager import get_filtered_customers
+from .customer_exceptions import (
+    CustomerDataError,
+    CustomerNotFoundError,
+    CustomerOperationError,
+    CustomerQueryError,
+)
+from .customer_manager import (
+    create_customer,
+    delete_customer,
+    get_customer_by_id,
+    get_filtered_customers,
+    update_customer,
+)
 
 customer_bp = Blueprint(
     "customer",
@@ -22,6 +33,28 @@ def get_current_filters():
     }
 
 
+def get_customer_form_data():
+    return {
+        "first_name": request.form.get("first_name", ""),
+        "last_name": request.form.get("last_name", ""),
+        "phone": request.form.get("phone", ""),
+        "email": request.form.get("email", ""),
+        "driver_license_number": request.form.get("driver_license_number", ""),
+        "address": request.form.get("address", ""),
+    }
+
+
+def render_customer_form(template_title, submit_label, form_action, customer_data, error_message=None):
+    return render_template(
+        "customer_form.html",
+        page_title=template_title,
+        submit_label=submit_label,
+        form_action=form_action,
+        customer_data=customer_data,
+        error_message=error_message,
+    )
+
+
 @customer_bp.route("/customers")
 def show_customers():
     customers = get_filtered_customers(**get_current_filters())
@@ -29,8 +62,108 @@ def show_customers():
         "customers.html",
         customers=customers,
         error_message=None,
+        status_message=request.args.get("message", ""),
         current_filters=get_current_filters(),
     )
+
+
+@customer_bp.route("/customers/create", methods=["GET"])
+def show_create_customer_form():
+    return render_customer_form(
+        template_title="Create Customer",
+        submit_label="Create Customer",
+        form_action=url_for("customer.create_customer_record"),
+        customer_data={
+            "first_name": "",
+            "last_name": "",
+            "phone": "",
+            "email": "",
+            "driver_license_number": "",
+            "address": "",
+        },
+    )
+
+
+@customer_bp.route("/customers/create", methods=["POST"])
+def create_customer_record():
+    customer_data = get_customer_form_data()
+
+    try:
+        create_customer(customer_data)
+    except CustomerDataError as error:
+        return render_customer_form(
+            template_title="Create Customer",
+            submit_label="Create Customer",
+            form_action=url_for("customer.create_customer_record"),
+            customer_data=customer_data,
+            error_message=str(error),
+        ), 400
+
+    return redirect(url_for("customer.show_customers", message="Customer created successfully."))
+
+
+@customer_bp.route("/customers/<int:customer_id>/edit", methods=["GET"])
+def show_edit_customer_form(customer_id):
+    customer = get_customer_by_id(customer_id)
+    return render_customer_form(
+        template_title="Edit Customer",
+        submit_label="Save Changes",
+        form_action=url_for("customer.update_customer_record", customer_id=customer_id),
+        customer_data={
+            "first_name": customer.first_name,
+            "last_name": customer.last_name,
+            "phone": customer.phone,
+            "email": customer.email,
+            "driver_license_number": customer.driver_license_number,
+            "address": customer.address,
+        },
+    )
+
+
+@customer_bp.route("/customers/<int:customer_id>/edit", methods=["POST"])
+def update_customer_record(customer_id):
+    customer_data = get_customer_form_data()
+
+    try:
+        update_customer(customer_id, customer_data)
+    except CustomerNotFoundError:
+        raise
+    except CustomerDataError as error:
+        return render_customer_form(
+            template_title="Edit Customer",
+            submit_label="Save Changes",
+            form_action=url_for("customer.update_customer_record", customer_id=customer_id),
+            customer_data=customer_data,
+            error_message=str(error),
+        ), 400
+
+    return redirect(url_for("customer.show_customers", message="Customer updated successfully."))
+
+
+@customer_bp.route("/customers/<int:customer_id>/delete", methods=["GET"])
+def show_delete_customer(customer_id):
+    customer = get_customer_by_id(customer_id)
+    return render_template(
+        "customer_delete.html",
+        customer=customer,
+        error_message=None,
+    )
+
+
+@customer_bp.route("/customers/<int:customer_id>/delete", methods=["POST"])
+def delete_customer_record(customer_id):
+    customer = get_customer_by_id(customer_id)
+
+    try:
+        delete_customer(customer_id)
+    except CustomerOperationError as error:
+        return render_template(
+            "customer_delete.html",
+            customer=customer,
+            error_message=str(error),
+        ), 400
+
+    return redirect(url_for("customer.show_customers", message="Customer deleted successfully."))
 
 
 @customer_bp.errorhandler(CustomerQueryError)
@@ -39,8 +172,20 @@ def handle_customer_query_error(error):
         "customers.html",
         customers=[],
         error_message=str(error),
+        status_message=None,
         current_filters=get_current_filters(),
     ), 400
+
+
+@customer_bp.errorhandler(CustomerNotFoundError)
+def handle_customer_not_found(error):
+    return render_template(
+        "customers.html",
+        customers=[],
+        error_message=str(error),
+        status_message=None,
+        current_filters=get_current_filters(),
+    ), 404
 
 
 @customer_bp.errorhandler(CustomerDataError)
@@ -49,6 +194,7 @@ def handle_customer_data_error(error):
         "customers.html",
         customers=[],
         error_message=str(error),
+        status_message=None,
         current_filters=get_current_filters(),
     ), 500
 
@@ -59,5 +205,6 @@ def handle_customer_unexpected_error(error):
         "customers.html",
         customers=[],
         error_message="Something went wrong while loading the page.",
+        status_message=None,
         current_filters=get_current_filters(),
     ), 500

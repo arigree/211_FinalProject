@@ -13,7 +13,7 @@
                 <div>
                     <p class="eyebrow">Car Rental System</p>
                     <h1>Customer List</h1>
-                    <p class="subtitle">Customers currently stored in the database.</p>
+                    <p class="subtitle">Browse, filter, create, update, and delete customer records.</p>
                 </div>
 
                 <a class="home-link" href="/">Back to Home</a>
@@ -22,6 +22,14 @@
             {% if error_message %}
                 <p class="message error">{{ error_message }}</p>
             {% endif %}
+
+            {% if status_message %}
+                <p class="message success">{{ status_message }}</p>
+            {% endif %}
+
+            <div class="top-actions">
+                <a class="primary-link" href="{{ url_for('customer.show_create_customer_form') }}">Create Customer</a>
+            </div>
 
             <form class="filter-form" method="get" action="{{ url_for('customer.show_customers') }}">
                 <div class="form-row">
@@ -88,6 +96,7 @@
                             <th>Email</th>
                             <th>Driver License</th>
                             <th>Address</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,10 +109,16 @@
                                 <td>{{ customer.email }}</td>
                                 <td>{{ customer.driver_license_number }}</td>
                                 <td>{{ customer.address }}</td>
+                                <td>
+                                    <div class="row-actions">
+                                        <a class="action-link" href="{{ url_for('customer.show_edit_customer_form', customer_id=customer.customer_id) }}">Edit</a>
+                                        <a class="action-link action-link-danger" href="{{ url_for('customer.show_delete_customer', customer_id=customer.customer_id) }}">Delete</a>
+                                    </div>
+                                </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="7" class="empty">No customers found.</td>
+                                <td colspan="8" class="empty">No customers found.</td>
                             </tr>
                         {% endfor %}
                     </tbody>

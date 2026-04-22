@@ -11,6 +11,7 @@ class Customer(db.Model):
     email = db.Column(db.String(100), nullable=False, unique=True)
     driver_license_number = db.Column(db.String(50), nullable=False, unique=True)
     address = db.Column(db.String(200), nullable=False)
+    rentals = db.relationship("Rental", backref="customer", lazy=True)
 
     rentals = db.relationship("Rental", backref="customer", lazy=True)
 

@@ -16,6 +16,7 @@ class Staff(db.Model):
     role = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(20))
     address = db.Column(db.String(200))
+    rentals = db.relationship("Rental", backref="staff", lazy=True)
 
     rentals = db.relationship("Rental", backref="staff", lazy=True)
 
