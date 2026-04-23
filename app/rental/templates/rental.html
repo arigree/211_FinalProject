@@ -2,9 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rentals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental</title>
+    <link rel="stylesheet" href="{{ url_for('rental.static', filename='rental.css') }}">
 </head>
 <body>
+    <main class="page">
+        <section class="card">
+            <div class="header">
+                <div>
+                    <p class="eyebrow">Car Rental System</p>
+                    <h1>Rental List</h1>
+                    <p class="subtitle">All rentals currently stored in the database.</p>
+                </div>
 
+                <a class="home-link" href="/">Back to Home</a>
+            </div>
+
+            <form class="search-form" method="GET" action="{{ url_for('rental.search') }}">
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ query or '' }}"
+                    placeholder="Search for rentals"
+                    class="search-input"
+                >
+                <button type="submit" class="search-button">Search</button>
+                <a class="clear-link" href="{{ url_for('rental.show_rentals') }}">Clear</a>
+            </form>
+
+            {% if error_message %}
+                <p class="message error">{{ error_message }}</p>
+            {% endif %}
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rental ID</th>
+                            <th>Checkout Date</th>
+                            <th>Due Date</th>
+                            <th>Return Date</th>
+                            <th>Checkout Mileage</th>
+                            <th>Return Mileage</th>
+                            <th>Rental Status</th>
+                            <th>Total Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rental in rentals %}
+                            <tr>
+                                <td>{{ rental.rental_id }}</td>
+                                <td>{{ rental.checkout_date }}</td>
+                                <td>{{ rental.due_date }}</td>
+                                <td>{{ rental.return_date }}</td>
+                                <td>{{ rental.checkout_mileage }}</td>
+                                <td>{{ rental.return_mileage }}</td>
+                                <td>{{ rental.rental_status }}</td>
+                                <td>{{ rental.total_cost }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="empty">No rentals found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

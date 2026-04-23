@@ -10,7 +10,7 @@ from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 from extensions import db
 
-from .rental import Rental
+# from .rental import Rental
 from .staff import Staff
 from .staff_exceptions import *
 
@@ -75,24 +75,24 @@ class StaffManager:
         except Exception as e:
             return StaffManager.handle_exceptions(e)
 
-    # Get staff member rentals
-    @staticmethod
-    def get_staff_rentals(staff_id: int):
-        try:
-            staff_member = db.session.get(Staff, staff_id)
-            if not staff_member:
-                raise StaffNotFoundException(f"Staff member with ID {staff_id} not found")
-
-            rentals = (
-                db.session.query(Rental)
-                .filter(Rental.staff_id == staff_id)
-                .order_by(Rental.checkout_date.desc())
-                .all()
-            )
-
-            return staff_member, rentals
-        except Exception as e:
-            return StaffManager.handle_exceptions(e)
+    # # Get staff member rentals
+    # @staticmethod
+    # def get_staff_rentals(staff_id: int):
+    #     try:
+    #         staff_member = db.session.get(Staff, staff_id)
+    #         if not staff_member:
+    #             raise StaffNotFoundException(f"Staff member with ID {staff_id} not found")
+    #
+    #         rentals = (
+    #             db.session.query(Rental)
+    #             .filter(Rental.staff_id == staff_id)
+    #             .order_by(Rental.checkout_date.desc())
+    #             .all()
+    #         )
+    #
+    #         return staff_member, rentals
+    #     except Exception as e:
+    #         return StaffManager.handle_exceptions(e)
 
     # Create a new staff member
     @staticmethod
@@ -172,11 +172,11 @@ class StaffManager:
             if not staff_member:
                 raise StaffNotFoundException(f"The staff id '{staff_id}' could not be found in the database.")
 
-            related_rentals = select(Rental).filter_by(staff_id=staff_id)
-            rentals = db.session.scalars(related_rentals).all()
-
-            if rentals:
-                return "This staff member cannot be deleted because there are rental records connected to them."
+            # related_rentals = select(Rental).filter_by(staff_id=staff_id)
+            # rentals = db.session.scalars(related_rentals).all()
+            #
+            # if rentals:
+            #     return "This staff member cannot be deleted because there are rental records connected to them."
 
             db.session.delete(staff_member)
             db.session.commit()

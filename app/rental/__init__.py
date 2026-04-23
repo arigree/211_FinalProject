@@ -3,7 +3,7 @@
 # File: __init__.py
 # Description:
 
-# from .rental_controller import rental_bp
-#
-# __all__ = ["rental_bp"]
+from .rental_controller import rental_bp
+
+__all__ = ["rental_bp"]
 
