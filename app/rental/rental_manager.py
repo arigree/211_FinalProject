@@ -6,6 +6,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import or_
 
+from extensions import db
 from .rental import Rental
 from .rental_exceptions import RentalDataError
 
@@ -45,3 +46,44 @@ def search_rentals(search_text: str):
 
     except SQLAlchemyError as exc:
         raise RentalDataError("Unable to load rental data right now.") from exc
+
+def create_rental(data):
+    try:
+        rental = Rental(**data)
+        db.session.add(rental)
+        db.session.commit()
+        return rental
+    except SQLAlchemyError as exc:
+        db.session.rollback()
+        raise RentalDataError("Unable to create rental.") from exc
+
+def update_rental(rental_id, data):
+    try:
+        rental = Rental.query.get(rental_id)
+
+        if not rental:
+            raise RentalDataError("Rental not found.")
+
+        for key, value in data.items():
+            setattr(rental, key, value)
+
+        db.session.commit()
+        return rental
+
+    except SQLAlchemyError as exc:
+        db.session.rollback()
+        raise RentalDataError("Unable to update rental.") from exc
+
+def delete_rental(rental_id):
+    try:
+        rental = Rental.query.get(rental_id)
+
+        if not rental:
+            raise RentalDataError("Rental not found.")
+
+        db.session.delete(rental)
+        db.session.commit()
+
+    except SQLAlchemyError as exc:
+        db.session.rollback()
+        raise RentalDataError("Unable to delete rental.") from exc

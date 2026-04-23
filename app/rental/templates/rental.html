@@ -17,6 +17,7 @@
                 </div>
 
                 <a class="home-link" href="/">Back to Home</a>
+                <a href="{{ url_for('rental.add_rental') }}">Add Rental</a>
             </div>
 
             <form class="search-form" method="GET" action="{{ url_for('rental.search') }}">
@@ -42,6 +43,7 @@
                             <th>Rental ID</th>
                             <th>Vehicle ID</th>
                             <th>Customer ID</th>
+                            <th>Staff ID</th>
                             <th>Checkout Date</th>
                             <th>Due Date</th>
                             <th>Return Date</th>
@@ -49,6 +51,7 @@
                             <th>Return Mileage</th>
                             <th>Rental Status</th>
                             <th>Total Cost</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,6 +60,7 @@
                                 <td>{{ rental.rental_id }}</td>
                                 <td>{{ rental.vehicle_id }}</td>
                                 <td>{{ rental.customer_id }}</td>
+                                <td>{{ rental.staff_id }}</td>
                                 <td>{{ rental.checkout_date }}</td>
                                 <td>{{ rental.due_date }}</td>
                                 <td>{{ rental.return_date }}</td>
@@ -64,6 +68,12 @@
                                 <td>{{ rental.return_mileage }}</td>
                                 <td>{{ rental.rental_status }}</td>
                                 <td>{{ rental.total_cost }}</td>
+                                <td>
+                                    <a href="{{ url_for('rental.edit_rental', rental_id=rental.rental_id) }}">Edit</a>
+                                        <form method="POST" action="{{ url_for('rental.delete_rental_route', rental_id=rental.rental_id) }}" style="display:inline;">
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                </td>
                             </tr>
                         {% else %}
                             <tr>

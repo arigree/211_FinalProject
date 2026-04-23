@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental</title>
+    <link rel="stylesheet" href="{{ url_for('rental.static', filename='rental.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="card">
+            <form method="POST">
+    <input name="customer_id" placeholder="Customer ID">
+    <input name="vehicle_id" placeholder="Vehicle ID">
+    <input name="staff_id" placeholder="Staff ID">
+    <input name="checkout_date" placeholder="Checkout Date">
+    <input name="due_date" placeholder="Due Date">
+    <input name="return_date" placeholder="Return Date">
+    <input name="checkout_mileage" placeholder="Checkout Mileage">
+    <input name="return_mileage" placeholder="Return Mileage">
+    <input name="rental_status" placeholder="Status">
+    <input name="total_cost" placeholder="Cost">
+    <button type="submit">Create</button>
+</form>
+        </section>
+    </main>
+</body>
+</html>
