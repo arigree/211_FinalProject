@@ -49,3 +49,15 @@ def handle_location_data_error(error):
         locations=[],
         error_message=str(error),
     ), 500
+
+
+    # @staticmethod
+    # def handle_exceptions(exception):
+    #     db.session.rollback()
+    #     orig_error = exception.__dict__.get('orig', "")
+    #     if isinstance(exception, (MovieNotFoundException, GenreNotFoundException)):
+    #         return exception.__str__()
+    #     elif isinstance(exception, SQLAlchemyError):
+    #         return f"An database error occurred: {str(orig_error)}."
+    #     else:
+    #         return f"An unexpected error occurred: {str(orig_error)}"
