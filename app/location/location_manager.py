@@ -40,14 +40,58 @@ class LocationManager:
                     )
                 )
 
-                results = query.order_by(Location.location_name.asc()).limit(20).all()
+            results = query.order_by(Location.location_name.asc()).limit(20).all()
 
-                if not results:
-                    raise LocationDataError("No locations matched your search.")
-                return results
+            if not results:
+                raise LocationDataError("No locations matched your search.")
+            return results
 
         except SQLAlchemyError as exc:
             raise LocationDataError("Unable to load location data right now.") from exc
+
+    @staticmethod
+    def create_location(data):
+        try:
+            location = Location(**data)
+            db.session.add(location)
+            db.session.commit()
+            return location
+        except SQLAlchemyError as exc:
+            db.session.rollback()
+            raise LocationDataError("Unable to create location.") from exc
+
+    @staticmethod
+    def update_location(location_id, data):
+        try:
+            location = Location.query.get(location_id)
+
+            if not location:
+                raise LocationDataError("Location not found.")
+
+            for key, value in data.items():
+                setattr(location, key, value)
+
+            db.session.commit()
+            return location
+
+        except SQLAlchemyError as exc:
+            db.session.rollback()
+            raise LocationDataError("Unable to update location.") from exc
+
+    @staticmethod
+    def delete_location(location_id):
+        try:
+            location = Location.query.get(location_id)
+
+            if not location:
+                raise LocationDataError("Location not found.")
+
+            db.session.delete(location)
+            db.session.commit()
+
+        except SQLAlchemyError as exc:
+            db.session.rollback()
+            raise LocationDataError("Unable to delete location.") from exc
 
 
     @staticmethod

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations</title>
+    <link rel="stylesheet" href="{{ url_for('location.static', filename='locations.css') }}">
+</head>
+<body>
+<main class="page">
+    <section class="card">
+
+        <h2 style="margin-bottom: 16px;">
+            {{ "Edit Location" if location else "Add Location" }}
+        </h2>
+
+        <form method="POST" class="form-grid">
+
+            <input name="location_name"
+                   placeholder="Location Name"
+                   value="{{ location.location_name if location else '' }}"
+                   class="form-input">
+
+            <input name="city"
+                   placeholder="City"
+                   value="{{ location.city if location else '' }}"
+                   class="form-input">
+
+            <input name="state"
+                   placeholder="State"
+                   value="{{ location.state if location else '' }}"
+                   class="form-input">
+
+            <input name="phone_number"
+                   placeholder="Phone Number"
+                   value="{{ location.phone_number if location else '' }}"
+                   class="form-input">
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    {{ "Update" if location else "Create" }}
+                </button>
+
+                <a href="{{ url_for('location.show_locations') }}"
+                   class="btn-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </section>
+</main>
+</body>
+</html>
