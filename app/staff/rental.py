@@ -4,7 +4,7 @@
 # Description: Define the rental model class
 from extensions import db
 
-# Define the Rental model class
+# Rental model used to connect staff and customer data
 class Rental(db.Model):
     __tablename__ = "Rental"
 

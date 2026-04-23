@@ -16,6 +16,7 @@ class Staff(db.Model):
     role = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(20))
     address = db.Column(db.String(200))
+    # ORM relationship to access rentals handled by a staff member
     rentals = db.relationship("Rental", backref="staff", lazy=True)
 
     def __init__(self, first_name, last_name, username, email, role, phone, address):
