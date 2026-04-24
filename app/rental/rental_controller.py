@@ -192,10 +192,15 @@ def edit_rental(rental_id):
 
     return render_template("rental_form.html", rental=rental, customers=customers, staff_members=staff_members, vehicles=vehicles)
 
+@rental_bp.route("/rental/delete/<int:rental_id>", methods=["GET"])
+def confirm_delete_rental(rental_id):
+    rental = Rental.query.get_or_404(rental_id)
+    return render_template("rental_delete.html", rental=rental)
+
+
 @rental_bp.route("/rental/delete/<int:rental_id>", methods=["POST"])
 def delete_rental_route(rental_id):
     from flask import redirect, url_for
 
     RentalManager.delete_rental(rental_id)
     return redirect(url_for("rental.show_rentals"))
-

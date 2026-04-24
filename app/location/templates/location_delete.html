@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations</title>
+    <link rel="stylesheet" href="{{ url_for('location.static', filename='locations.css') }}">
+</head>
+<body>
+<main class="page">
+    <section class="card">
+
+        <h2>Delete Location</h2>
+
+        <p style="margin-top: 10px;">
+            Are you sure you want to delete:
+        </p>
+
+        <p style="font-weight: bold; margin: 10px 0;">
+            {{ location.location_name }} ({{ location.city }}, {{ location.state }})
+        </p>
+
+        <form method="POST"
+              action="{{ url_for('location.delete_location_route', location_id=location.location_id) }}">
+
+            <div class="form-actions">
+                <button type="submit" class="btn-danger">
+                    Yes, Delete
+                </button>
+
+                <a href="{{ url_for('location.show_locations') }}"
+                   class="btn-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </section>
+</main>
+</body>
+</html>

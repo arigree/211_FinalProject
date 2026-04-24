@@ -138,13 +138,24 @@ def edit_location(location_id):
 
     return render_template("location_form.html", location=location)
 
+@location_bp.route("/locations/delete/<int:location_id>", methods=["GET"])
+def confirm_delete_location(location_id):
+    """
+    Displays a confirmation page before deleting a location.
+    """
+    location = Location.query.get_or_404(location_id)
+
+    return render_template(
+        "location_delete.html",
+        location=location
+    )
+
 @location_bp.route("/locations/delete/<int:location_id>", methods=["POST"])
 def delete_location_route(location_id):
     """
-    Deletes a location from the database.
+    Deletes the location after confirmation.
     """
     from flask import redirect, url_for
 
     LocationManager.delete_location(location_id)
     return redirect(url_for("location.show_locations"))
-
