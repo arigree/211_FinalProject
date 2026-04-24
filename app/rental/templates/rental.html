@@ -69,7 +69,7 @@
                                 <td>{{ rental.rental_status }}</td>
                                 <td>{{ rental.total_cost }}</td>
                                 <td>
-                                    <a href="{{ url_for('rental.edit_rental', rental_id=rental.rental_id) }}" class="btn-primary">Edit</a>
+                                    <a href="{{ url_for('rental.edit_rental', rental_id=rental.rental_id) }}" class="btn-primary2">Edit</a>
                                         <form method="POST" action="{{ url_for('rental.delete_rental_route', rental_id=rental.rental_id) }}" style="display:inline;" onsubmit="return confirm('Delete this rental?');">
                                             <button type="submit" class="btn-danger">Delete</button>
                                         </form>

@@ -6,13 +6,7 @@ from .customer_exceptions import (
     CustomerOperationError,
     CustomerQueryError,
 )
-from .customer_manager import (
-    create_customer,
-    delete_customer,
-    get_customer_by_id,
-    get_filtered_customers,
-    update_customer,
-)
+from .customer_manager import CustomerManager
 
 customer_bp = Blueprint(
     "customer",
@@ -57,7 +51,7 @@ def render_customer_form(template_title, submit_label, form_action, customer_dat
 
 @customer_bp.route("/customers")
 def show_customers():
-    customers = get_filtered_customers(**get_current_filters())
+    customers = CustomerManager.get_filtered_customers(**get_current_filters())
     return render_template(
         "customers.html",
         customers=customers,
@@ -89,7 +83,7 @@ def create_customer_record():
     customer_data = get_customer_form_data()
 
     try:
-        create_customer(customer_data)
+        CustomerManager.create_customer(customer_data)
     except CustomerDataError as error:
         return render_customer_form(
             template_title="Create Customer",
@@ -104,7 +98,7 @@ def create_customer_record():
 
 @customer_bp.route("/customers/<int:customer_id>/edit", methods=["GET"])
 def show_edit_customer_form(customer_id):
-    customer = get_customer_by_id(customer_id)
+    customer = CustomerManager.get_customer_by_id(customer_id)
     return render_customer_form(
         template_title="Edit Customer",
         submit_label="Save Changes",
@@ -125,7 +119,7 @@ def update_customer_record(customer_id):
     customer_data = get_customer_form_data()
 
     try:
-        update_customer(customer_id, customer_data)
+        CustomerManager.update_customer(customer_id, customer_data)
     except CustomerNotFoundError:
         raise
     except CustomerDataError as error:
@@ -142,7 +136,7 @@ def update_customer_record(customer_id):
 
 @customer_bp.route("/customers/<int:customer_id>/delete", methods=["GET"])
 def show_delete_customer(customer_id):
-    customer = get_customer_by_id(customer_id)
+    customer = CustomerManager.get_customer_by_id(customer_id)
     return render_template(
         "customer_delete.html",
         customer=customer,
@@ -152,10 +146,10 @@ def show_delete_customer(customer_id):
 
 @customer_bp.route("/customers/<int:customer_id>/delete", methods=["POST"])
 def delete_customer_record(customer_id):
-    customer = get_customer_by_id(customer_id)
+    customer = CustomerManager.get_customer_by_id(customer_id)
 
     try:
-        delete_customer(customer_id)
+        CustomerManager.delete_customer(customer_id)
     except CustomerOperationError as error:
         return render_template(
             "customer_delete.html",

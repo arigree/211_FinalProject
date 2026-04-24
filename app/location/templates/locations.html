@@ -57,7 +57,7 @@
                                 <td>{{ location.state }}</td>
                                 <td>{{ location.phone_number }}</td>
                                 <td>
-                                    <a href="{{ url_for('location.edit_location', location_id=location.location_id) }}" class="btn-primary">Edit</a>
+                                    <a href="{{ url_for('location.edit_location', location_id=location.location_id) }}" class="btn-primary2">Edit</a>
                                         <form method="POST" action="{{ url_for('location.delete_location_route', location_id=location.location_id) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this location?');">
                                             <button type="submit" class="btn-danger">Delete</button>
                                         </form>

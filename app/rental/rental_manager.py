@@ -96,3 +96,14 @@ class RentalManager:
             db.session.rollback()
             print(exc)
             raise RentalDataError("Unable to delete rental.") from exc
+
+    @staticmethod
+    def handle_exceptions(exception):
+        db.session.rollback()
+        orig_error = exception.__dict__.get('orig', "")
+        if isinstance(exception, (RentalDataError)):
+            return exception.__str__()
+        elif isinstance(exception, SQLAlchemyError):
+            return f"An database error occurred: {str(orig_error)}."
+        else:
+            return f"An unexpected error occurred: {str(orig_error)}"
