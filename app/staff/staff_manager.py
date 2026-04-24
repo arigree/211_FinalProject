@@ -10,7 +10,7 @@ from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 from extensions import db
 
-# from .rental import Rental
+from app.rental.rental import Rental
 from .staff import Staff
 from .staff_exceptions import *
 
@@ -75,24 +75,25 @@ class StaffManager:
         except Exception as e:
             return StaffManager.handle_exceptions(e)
 
-    # # Get staff member rentals
-    # @staticmethod
-    # def get_staff_rentals(staff_id: int):
-    #     try:
-    #         staff_member = db.session.get(Staff, staff_id)
-    #         if not staff_member:
-    #             raise StaffNotFoundException(f"Staff member with ID {staff_id} not found")
-    #
-    #         rentals = (
-    #             db.session.query(Rental)
-    #             .filter(Rental.staff_id == staff_id)
-    #             .order_by(Rental.checkout_date.desc())
-    #             .all()
-    #         )
-    #
-    #         return staff_member, rentals
-    #     except Exception as e:
-    #         return StaffManager.handle_exceptions(e)
+    # Get staff member rentals
+    @staticmethod
+    def get_staff_rentals(staff_id: int):
+        try:
+            staff_member = db.session.get(Staff, staff_id)
+            if not staff_member:
+                raise StaffNotFoundException(f"Staff member with ID {staff_id} not found")
+
+            rentals = (
+                db.session.query(Rental)
+                .filter(Rental.staff_id == staff_id)
+                .order_by(Rental.checkout_date.desc())
+                .all()
+            )
+
+            return staff_member, rentals
+
+        except Exception as e:
+            return StaffManager.handle_exceptions(e)
 
     # Create a new staff member
     @staticmethod
