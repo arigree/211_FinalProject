@@ -50,20 +50,67 @@ def search():
 
 @rental_bp.route("/rental/add", methods=["GET", "POST"])
 def add_rental():
+    """
+    Handles creation of a rental.
+
+    GET: display form
+    POST: validate input and create rental
+    """
     from flask import redirect, url_for
 
     if request.method == "POST":
+
+        try:
+            customer_id = int(request.form.get("customer_id", ""))
+            vehicle_id = int(request.form.get("vehicle_id", ""))
+            staff_id = int(request.form.get("staff_id", ""))
+        except ValueError:
+            raise RentalDataError("Customer, Vehicle, and Staff must be valid IDs.")
+
+        checkout_date = request.form.get("checkout_date", "").strip()
+        due_date = request.form.get("due_date", "").strip()
+        status = request.form.get("rental_status", "").strip()
+
+        if not checkout_date:
+            raise RentalDataError("Checkout date is required.")
+
+        if not due_date:
+            raise RentalDataError("Due date is required.")
+
+        if not status:
+            raise RentalDataError("Rental status is required.")
+
+        checkout_mileage = request.form.get("checkout_mileage", "").strip()
+        return_mileage = request.form.get("return_mileage", "").strip()
+
+        if not checkout_mileage:
+            raise RentalDataError("Checkout mileage is required.")
+
+        try:
+            total_cost = float(request.form.get("total_cost", ""))
+        except ValueError:
+            raise RentalDataError("Total cost must be a valid number.")
+
+        if not Customer.query.get(customer_id):
+            raise RentalDataError("Selected customer does not exist.")
+
+        if not Staff.query.get(staff_id):
+            raise RentalDataError("Selected staff member does not exist.")
+
+        if not Vehicle.query.get(vehicle_id):
+            raise RentalDataError("Selected vehicle does not exist.")
+
         data = {
-            "customer_id": int(request.form["customer_id"]),
-            "vehicle_id": int(request.form["vehicle_id"]),
-            "staff_id": int(request.form["staff_id"]),
-            "checkout_date": request.form["checkout_date"],
-            "due_date": request.form["due_date"],
+            "customer_id": customer_id,
+            "vehicle_id": vehicle_id,
+            "staff_id": staff_id,
+            "checkout_date": checkout_date,
+            "due_date": due_date,
             "return_date": request.form.get("return_date"),
-            "checkout_mileage": request.form["checkout_mileage"],
-            "return_mileage": request.form["return_mileage"],
-            "rental_status": request.form["rental_status"],
-            "total_cost": float(request.form["total_cost"]),
+            "checkout_mileage": checkout_mileage,
+            "return_mileage": return_mileage,
+            "rental_status": status,
+            "total_cost": total_cost,
         }
 
         RentalManager.create_rental(data)
@@ -82,17 +129,58 @@ def edit_rental(rental_id):
     rental = Rental.query.get_or_404(rental_id)
 
     if request.method == "POST":
+
+        try:
+            customer_id = int(request.form.get("customer_id", ""))
+            vehicle_id = int(request.form.get("vehicle_id", ""))
+            staff_id = int(request.form.get("staff_id", ""))
+        except ValueError:
+            raise RentalDataError("Customer, Vehicle, and Staff must be valid IDs.")
+
+        checkout_date = request.form.get("checkout_date", "").strip()
+        due_date = request.form.get("due_date", "").strip()
+        status = request.form.get("rental_status", "").strip()
+
+        if not checkout_date:
+            raise RentalDataError("Checkout date is required.")
+
+        if not due_date:
+            raise RentalDataError("Due date is required.")
+
+        if not status:
+            raise RentalDataError("Rental status is required.")
+
+        checkout_mileage = request.form.get("checkout_mileage", "").strip()
+        return_mileage = request.form.get("return_mileage", "").strip()
+
+        if not checkout_mileage:
+            raise RentalDataError("Checkout mileage is required.")
+
+        try:
+            total_cost = float(request.form.get("total_cost", ""))
+        except ValueError:
+            raise RentalDataError("Total cost must be a valid number.")
+
+        if not Customer.query.get(customer_id):
+            raise RentalDataError("Selected customer does not exist.")
+
+        if not Staff.query.get(staff_id):
+            raise RentalDataError("Selected staff member does not exist.")
+
+        if not Vehicle.query.get(vehicle_id):
+            raise RentalDataError("Selected vehicle does not exist.")
+
         data = {
-            "customer_id": int(request.form["customer_id"]),
-            "vehicle_id": int(request.form["vehicle_id"]),
-            "staff_id": int(request.form["staff_id"]),
-            "checkout_date": request.form["checkout_date"],
-            "due_date": request.form["due_date"],
+            "customer_id": customer_id,
+            "vehicle_id": vehicle_id,
+            "staff_id": staff_id,
+            "checkout_date": checkout_date,
+            "due_date": due_date,
             "return_date": request.form.get("return_date"),
-            "checkout_mileage": request.form["checkout_mileage"],
-            "return_mileage": request.form["return_mileage"],
-            "rental_status": request.form["rental_status"],
-            "total_cost": float(request.form["total_cost"]),
+            "checkout_mileage": checkout_mileage,
+            "return_mileage": return_mileage,
+            "rental_status": status,
+            "total_cost": total_cost,
         }
 
         RentalManager.update_rental(rental_id, data)
@@ -110,12 +198,4 @@ def delete_rental_route(rental_id):
 
     RentalManager.delete_rental(rental_id)
     return redirect(url_for("rental.show_rentals"))
-
-@rental_bp.errorhandler(RentalDataError)
-def handle_rental_data_error(error):
-    return render_template(
-        "rental.html",
-        rental=[],
-        error_message=str(error),
-    ), 500
 

@@ -12,8 +12,14 @@ from .rental_exceptions import RentalDataError
 
 class RentalManager:
 
+    """
+    Handles all database interactions for Rental records.
+    """
     @staticmethod
     def get_all_rentals():
+        """
+        Returns all rentals.
+        """
         try:
             return Rental.query.all()
         except SQLAlchemyError as exc:
@@ -21,6 +27,9 @@ class RentalManager:
 
     @staticmethod
     def search_rentals(search_text: str):
+        """
+        Searches for rentals.
+        """
         try:
             search_text = (search_text or "").strip()
 
@@ -52,6 +61,7 @@ class RentalManager:
 
     @staticmethod
     def create_rental(data):
+        """Creates a new rental transaction."""
         try:
             rental = Rental(**data)
             db.session.add(rental)
@@ -64,6 +74,9 @@ class RentalManager:
 
     @staticmethod
     def update_rental(rental_id, data):
+        """
+        Edits a rental
+        """
         try:
             rental = Rental.query.get(rental_id)
 
@@ -83,6 +96,9 @@ class RentalManager:
 
     @staticmethod
     def delete_rental(rental_id):
+        """
+        Deletes rental history
+        """
         try:
             rental = Rental.query.get(rental_id)
 

@@ -11,9 +11,14 @@ from .locations import Location
 from .location_exceptions import LocationDataError
 
 class LocationManager:
-
+    """
+    Handles all database operations related to Location.
+    Separates business logic from route/controller logic.
+    """
     @staticmethod
     def get_all_locations():
+        """Returns all locations."""
+
         try:
             return Location.query.all()
         except SQLAlchemyError as exc:
@@ -21,6 +26,9 @@ class LocationManager:
 
     @staticmethod
     def search_locations(search_text: str):
+        """
+        Searches locations based on partial matches across multiple fields.
+        """
         try:
             search_text = (search_text or "").strip()
 
@@ -51,6 +59,7 @@ class LocationManager:
 
     @staticmethod
     def create_location(data):
+        """Creates and saves a new location."""
         try:
             location = Location(**data)
             db.session.add(location)
@@ -62,6 +71,7 @@ class LocationManager:
 
     @staticmethod
     def update_location(location_id, data):
+        """Updates an existing location."""
         try:
             location = Location.query.get(location_id)
 
@@ -80,6 +90,7 @@ class LocationManager:
 
     @staticmethod
     def delete_location(location_id):
+        """Deletes a location."""
         try:
             location = Location.query.get(location_id)
 
