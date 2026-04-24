@@ -8,21 +8,86 @@
 </head>
 <body>
     <main class="page">
-        <section class="card">
-            <form method="POST">
-    <input name="customer_id" placeholder="Customer ID">
-    <input name="vehicle_id" placeholder="Vehicle ID">
-    <input name="staff_id" placeholder="Staff ID">
-    <input name="checkout_date" placeholder="Checkout Date">
-    <input name="due_date" placeholder="Due Date">
-    <input name="return_date" placeholder="Return Date">
-    <input name="checkout_mileage" placeholder="Checkout Mileage">
-    <input name="return_mileage" placeholder="Return Mileage">
-    <input name="rental_status" placeholder="Status">
-    <input name="total_cost" placeholder="Cost">
-    <button type="submit">Create</button>
-</form>
-        </section>
-    </main>
+    <section class="card">
+
+        <h2 style="margin-bottom: 16px;">
+            {{ "Edit Rental" if rental else "Add Rental" }}
+        </h2>
+
+        <form method="POST" class="form-grid">
+
+            <select name="customer_id" class="form-input">
+                {% for customer in customers %}
+                    <option value="{{ customer.customer_id }}"
+                {% if rental and rental.customer_id == customer.customer_id %}selected{% endif %}>Customer: {{ customer.first_name }} {{ customer.last_name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="staff_id" class="form-input">
+                {% for staff in staff_members %}
+                    <option value="{{ staff.staff_id }}"
+                {% if rental and rental.staff_id == staff.staff_id %}selected{% endif %}>Staff: {{ staff.first_name }} {{ staff.last_name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="vehicle_id" class="form-input">
+                {% for vehicle in vehicles %}
+                    <option value="{{ vehicle.vehicle_id }}"
+                {% if rental and rental.vehicle_id == vehicle.vehicle_id %}selected{% endif %}>Vehicle: {{ vehicle.make }} {{ vehicle.model }}, {{ vehicle.year }}, {{ vehicle.color }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <input name="checkout_date"
+                   placeholder="Checkout Date"
+                   value="{{ rental.checkout_date if rental else '' }}"
+                   class="form-input">
+
+            <input name="due_date"
+                   placeholder="Due Date"
+                   value="{{ rental.due_date if rental else '' }}"
+                   class="form-input">
+
+            <input name="return_date"
+                   placeholder="Return Date"
+                   value="{{ rental.return_date if rental else '' }}"
+                   class="form-input">
+
+            <input name="checkout_mileage"
+                   placeholder="Checkout Mileage"
+                   value="{{ rental.checkout_mileage if rental else '' }}"
+                   class="form-input">
+
+            <input name="return_mileage"
+                   placeholder="Return Mileage"
+                   value="{{ rental.return_mileage if rental else '' }}"
+                   class="form-input">
+
+            <input name="rental_status"
+                   placeholder="Status"
+                   value="{{ rental.rental_status if rental else '' }}"
+                   class="form-input">
+
+            <input name="total_cost"
+                   placeholder="Total Cost"
+                   value="{{ rental.total_cost if rental else '' }}"
+                   class="form-input">
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    {{ "Update" if rental else "Create" }}
+                </button>
+
+                <a href="{{ url_for('rental.show_rentals') }}"
+                   class="btn-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </section>
+</main>
 </body>
 </html>

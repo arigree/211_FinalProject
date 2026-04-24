@@ -17,7 +17,7 @@
                 </div>
 
                 <a class="home-link" href="/">Back to Home</a>
-                <a href="{{ url_for('rental.add_rental') }}">Add Rental</a>
+                <a href="{{ url_for('rental.add_rental') }}" class="btn-primary">Add Rental</a>
             </div>
 
             <form class="search-form" method="GET" action="{{ url_for('rental.search') }}">
@@ -69,9 +69,9 @@
                                 <td>{{ rental.rental_status }}</td>
                                 <td>{{ rental.total_cost }}</td>
                                 <td>
-                                    <a href="{{ url_for('rental.edit_rental', rental_id=rental.rental_id) }}">Edit</a>
-                                        <form method="POST" action="{{ url_for('rental.delete_rental_route', rental_id=rental.rental_id) }}" style="display:inline;">
-                                            <button type="submit">Delete</button>
+                                    <a href="{{ url_for('rental.edit_rental', rental_id=rental.rental_id) }}" class="btn-primary">Edit</a>
+                                        <form method="POST" action="{{ url_for('rental.delete_rental_route', rental_id=rental.rental_id) }}" style="display:inline;" onsubmit="return confirm('Delete this rental?');">
+                                            <button type="submit" class="btn-danger">Delete</button>
                                         </form>
                                 </td>
                             </tr>

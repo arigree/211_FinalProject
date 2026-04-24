@@ -4,7 +4,7 @@
 # Description:
 
 from extensions import db
-
+from .vehicle import Vehicle
 
 class Rental(db.Model):
     __tablename__ = "Rental"
