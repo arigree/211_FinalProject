@@ -11,13 +11,8 @@
             <form method="post" style="width: 100%;">
                 <h4>Are you sure you want to log out?</h4>
                 <div class="auth-row">
-                    <button type="submit">
-                        <img style="width: 24px; vertical-align: middle; margin-right: 10px"
-                             src="{{ url_for("auth.static", filename='img/yes.png') }}">Logout
-                    </button>&nbsp;
-                    <button><a href="{{ url_for('user.index') }}">
-                        <img style="width: 24px; vertical-align: middle; margin-right: 10px"
-                             src="{{ url_for("auth.static", filename='img/no.png') }}">Cancel</a></button>
+                    <button type="submit">Logout</button>&nbsp;
+                    <button><a href="{{ url_for('user.index') }}">Cancel</a></button>
                 </div>
             </form>
 
