@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <div class="auth-outer">
+        <div class="auth-inner">
+            <div class="left">
+                <form method="post">
+                    <div class="auth-row">
+                        <label for="username">Username:</label>
+                        <i class='bx bx-user'></i>
+                        <input type="text" id="username" name="username" placeholder="Username" required/>
+                    </div>
+                    <div class="auth-row">
+                        <label for="password">Password:</label>
+                        <i class='bx bx-lock'></i>
+                        <input type="password" id="password" name="password" placeholder="Password" required/>
+
+                    </div>
+                    <div class="auth-row">
+                        <button type="submit">Login</button>
+                    </div>
+                </form>
+                <div class="auth-row">
+                    Don't have an account? <a href="{{ url_for('auth.register') }}">Sign Up Now</a>
+                </div>
+            </div>
+            <div class="right">
+                <img src="{{ url_for('auth.static', filename='img/login.png') }}" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

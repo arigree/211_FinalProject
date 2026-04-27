@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h2>Registration</h2>
+    <div class="auth-outer">
+        <div class="auth-inner">
+            <div class="left">
+                <form method="post">
+                    <div class="auth-row">
+                        <label for="fullname">Fullname</label>
+                        <i class='bx bx-user-circle'></i>
+                        <input type="text" id="fullname" name="fullname" required placeholder="Fullname"
+                               value="{{ user.fullname if user else "" }}"><br>
+                    </div>
+                    <div class="auth-row">
+                        <label for="email">Email</label>
+                        <i class='bx bx-envelope'></i>
+                        <input type="email" id="email" name="email" required placeholder="Email"
+                               value="{{ user.email if user else "" }}"><br>
+                    </div>
+                    <div class="auth-row">
+                        <label for="username">Username:</label>
+                        <i class='bx bx-user'></i>
+                        <input type="text" id="username" name="username" required placeholder="Username"
+                               value="{{ user.username if user else "" }}"><br>
+                    </div>
+                    <div class="auth-row">
+                        <label for="password">Password:</label>
+                        <i class='bx bx-lock'></i>
+                        <input type="password" id="password" name="password" required placeholder="Password"><br>
+                    </div>
+                    <div class="auth-row">
+                        <button type="submit">Register</button>
+                    </div>
+                </form>
+                <div class="auth-row">
+                    Already have an account? <a href="{{ url_for('auth.login') }}">Log in Now</a>
+                </div>
+            </div>
+            <div class="right">
+                <img src="{{ url_for('auth.static', filename='img/registration.png') }}" alt="Registration">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

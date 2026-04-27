@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<h2>My Profile</h2>
+    {% if user is not none %}
+        {% set profile = {
+            "Fullname": user.fullname,
+            "Username": user.username,
+            "Email": user.email,
+            "Password": "******",
+            "User Role": user.role,
+            "Date Created": user.date_created.strftime("%m/%d/%Y")
+        } %}
+        <div id="user-profile-container">
+            {% for header, value in profile.items() %}
+                <div class="user-tile">
+                    <div class="left">
+                        <img src="{{ url_for('user.static',
+                        filename='img/' + header.replace(" ", "").lower() + ".png") }}" alt="{{ header }}">
+                    </div>
+                    <div class="middle">
+                        <h3>{{ header }}</h3>
+                        <div>{{ value }}</div>
+                    </div>
+                    <div class="right">
+                        <input type="button" value="Edit" disabled title="Under Construction">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>

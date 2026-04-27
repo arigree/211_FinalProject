@@ -7,6 +7,8 @@ from app.rental.rental_exceptions import RentalDataError
 from app.customer.customer_exceptions import CustomerDataError
 from app.staff.staff_exceptions import StaffException
 
+
+
 app = create_app()
 
 @app.errorhandler(LocationDataError)
@@ -22,6 +24,7 @@ def handle_data_errors(error):
         "error.html",
         error_message=str(error)
     ), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

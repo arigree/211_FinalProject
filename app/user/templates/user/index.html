@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Home</title>
+</head>
+<body>
+ <h2>Welcome to the Member Section</h2>
+    <br>
+    <div>
+        <img src="{{ url_for('user.static', filename='img/members.jpg') }}" alt="Members Only"
+             style="width: 160px; float: left; margin-right: 20px;">
+        <p>This section of the application is protected for authenticated members only.</p>
+        <p>Please use the link in the upper-right corner to log in. After you have logged in, you may view or edit your
+            media collection and your profile.</p>
+        <p>If you don't have an account yet, please sign up. Registration is free for personal and non-commercial use.</p>
+    </div>
+</body>
+</html>
