@@ -3,20 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Logout</title>
+    {#    Using the same naming conventions as locations, so the same stylesheet aswell.#}
+    <link rel="stylesheet" href="{{ url_for('location.static', filename='locations.css') }}">
 </head>
 <body>
-    <h2>Logout</h2>
-    <div class="auth-outer" style="width: 490px">
-        <div class="auth-inner">
-            <form method="post" style="width: 100%;">
-                <h4>Are you sure you want to log out?</h4>
-                <div class="auth-row">
-                    <button type="submit">Logout</button>&nbsp;
-                    <button><a href="{{ url_for('user.index') }}">Cancel</a></button>
-                </div>
-            </form>
-
+    <main class="page">
+    <section class="card">
+    <div class="header">
+        <div>
+            <p class="eyebrow">Car Rental System</p>
+            <h1>Logout</h1>
+            <p class="subtitle">Confirm logout.</p>
         </div>
+
+        <a class="home-link" href="/">Back to Home</a>
     </div>
+
+    <p style="margin-top: 10px;">
+        Are you sure you want to log out?
+    </p>
+
+    <form method="post" class="form-actions">
+
+        <button type="submit" class="btn-danger">
+            Logout
+        </button>
+
+        <a href="{{ url_for('user.index') }}" class="btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</section>
+</main>
+
 </body>
 </html>

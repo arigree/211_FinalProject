@@ -3,34 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    {#    Using the same naming conventions as locations, so the same stylesheet aswell.#}
+    <link rel="stylesheet" href="{{ url_for('location.static', filename='locations.css') }}">
 </head>
 <body>
-    <h2>Login</h2>
-    <div class="auth-outer">
-        <div class="auth-inner">
-            <div class="left">
-                <form method="post">
-                    <div class="auth-row">
-                        <label for="username">Username:</label>
-                        <i class='bx bx-user'></i>
-                        <input type="text" id="username" name="username" placeholder="Username" required/>
-                    </div>
-                    <div class="auth-row">
-                        <label for="password">Password:</label>
-                        <i class='bx bx-lock'></i>
-                        <input type="password" id="password" name="password" placeholder="Password" required/>
-
-                    </div>
-                    <div class="auth-row">
-                        <button type="submit">Login</button>
-                    </div>
-                </form>
-                <div class="auth-row">
-                    Don't have an account? <a href="{{ url_for('auth.register') }}">Sign Up Now</a>
-                </div>
-            </div>
-            
+    <main class="page">
+    <section class="card">
+    <div class="header">
+        <div>
+            <p class="eyebrow">Car Rental System</p>
+            <h1>Login</h1>
+            <p class="subtitle">Sign in to your account.</p>
         </div>
+
+        <a class="home-link" href="/">Back to Home</a>
     </div>
+
+    {% if message %}
+        <p class="message {{ css_class }}">{{ message }}</p>
+    {% endif %}
+
+    <form method="post" class="form-grid">
+
+        <input type="text"
+               name="username"
+               placeholder="Username"
+               class="form-input"
+               required>
+
+        <input type="password"
+               name="password"
+               placeholder="Password"
+               class="form-input"
+               required>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Login</button>
+
+            <a href="{{ url_for('auth.register') }}" class="btn-secondary">
+                Register
+            </a>
+        </div>
+
+    </form>
+
+</section>
+
+</main>
+
 </body>
 </html>
