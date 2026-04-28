@@ -21,7 +21,7 @@ def register():
 def login():
     return AuthController.login()
 
-@bp.route('/logout', methods=['POST'])
+@bp.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     return AuthController.logout()

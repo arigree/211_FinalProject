@@ -27,9 +27,11 @@
                 <p class="message success">{{ status_message }}</p>
             {% endif %}
 
-            <div class="top-actions">
-                <a class="primary-link" href="{{ url_for('customer.show_create_customer_form') }}">Create Customer</a>
-            </div>
+            {% if current_user.is_authenticated %}
+                <div class="top-actions">
+                    <a class="primary-link" href="{{ url_for('customer.show_create_customer_form') }}">Create Customer</a>
+                </div>
+            {% endif %}
 
             <form class="filter-form" method="get" action="{{ url_for('customer.show_customers') }}">
                 <div class="form-row">
@@ -110,10 +112,14 @@
                                 <td>{{ customer.driver_license_number }}</td>
                                 <td>{{ customer.address }}</td>
                                 <td>
-                                    <div class="row-actions">
-                                        <a class="action-link" href="{{ url_for('customer.show_edit_customer_form', customer_id=customer.customer_id) }}">Edit</a>
-                                        <a class="action-link action-link-danger" href="{{ url_for('customer.show_delete_customer', customer_id=customer.customer_id) }}">Delete</a>
-                                    </div>
+                                    {% if current_user.is_authenticated %}
+                                        <div class="row-actions">
+                                            <a class="action-link" href="{{ url_for('customer.show_edit_customer_form', customer_id=customer.customer_id) }}">Edit</a>
+                                            <a class="action-link action-link-danger" href="{{ url_for('customer.show_delete_customer', customer_id=customer.customer_id) }}">Delete</a>
+                                        </div>
+                                    {% else %}
+                                        <span class="empty">Login required</span>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% else %}

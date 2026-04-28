@@ -4,6 +4,7 @@
 # # Description:
 
 from flask import Blueprint, render_template, request
+from flask_login import login_required
 
 from .rental_exceptions import RentalDataError
 from .rental_manager import RentalManager
@@ -49,6 +50,7 @@ def search():
         ), 500
 
 @rental_bp.route("/rental/add", methods=["GET", "POST"])
+@login_required
 def add_rental():
     """
     Handles creation of a rental.
@@ -123,6 +125,7 @@ def add_rental():
     return render_template("rental_form.html", customers=customers, staff_members=staff_members, vehicles=vehicles)
 
 @rental_bp.route("/rental/edit/<int:rental_id>", methods=["GET", "POST"])
+@login_required
 def edit_rental(rental_id):
     from flask import redirect, url_for
 
@@ -193,12 +196,14 @@ def edit_rental(rental_id):
     return render_template("rental_form.html", rental=rental, customers=customers, staff_members=staff_members, vehicles=vehicles)
 
 @rental_bp.route("/rental/delete/<int:rental_id>", methods=["GET"])
+@login_required
 def confirm_delete_rental(rental_id):
     rental = Rental.query.get_or_404(rental_id)
     return render_template("rental_delete.html", rental=rental)
 
 
 @rental_bp.route("/rental/delete/<int:rental_id>", methods=["POST"])
+@login_required
 def delete_rental_route(rental_id):
     from flask import redirect, url_for
 

@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import login_required
 
 from .customer_exceptions import (
     CustomerDataError,
@@ -62,6 +63,7 @@ def show_customers():
 
 
 @customer_bp.route("/customers/create", methods=["GET"])
+@login_required
 def show_create_customer_form():
     return render_customer_form(
         template_title="Create Customer",
@@ -79,6 +81,7 @@ def show_create_customer_form():
 
 
 @customer_bp.route("/customers/create", methods=["POST"])
+@login_required
 def create_customer_record():
     customer_data = get_customer_form_data()
 
@@ -97,6 +100,7 @@ def create_customer_record():
 
 
 @customer_bp.route("/customers/<int:customer_id>/edit", methods=["GET"])
+@login_required
 def show_edit_customer_form(customer_id):
     customer = CustomerManager.get_customer_by_id(customer_id)
     return render_customer_form(
@@ -115,6 +119,7 @@ def show_edit_customer_form(customer_id):
 
 
 @customer_bp.route("/customers/<int:customer_id>/edit", methods=["POST"])
+@login_required
 def update_customer_record(customer_id):
     customer_data = get_customer_form_data()
 
@@ -135,6 +140,7 @@ def update_customer_record(customer_id):
 
 
 @customer_bp.route("/customers/<int:customer_id>/delete", methods=["GET"])
+@login_required
 def show_delete_customer(customer_id):
     customer = CustomerManager.get_customer_by_id(customer_id)
     return render_template(
@@ -145,6 +151,7 @@ def show_delete_customer(customer_id):
 
 
 @customer_bp.route("/customers/<int:customer_id>/delete", methods=["POST"])
+@login_required
 def delete_customer_record(customer_id):
     customer = CustomerManager.get_customer_by_id(customer_id)
 
