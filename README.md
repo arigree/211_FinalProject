@@ -3,8 +3,7 @@ ___________________
 ## Team Member Contributions
 - Khoutoub: Added Phase 5 session management and route protection across the customer, location, rental, and staff CRUD flows. Updated the app so protected routes redirect unauthenticated users to login with a clear message, and refreshed the home page to reflect login state.
 - Arissa: Added the initial authentication foundation with user registration, login, logout, the auth blueprint, the user model, and the related auth/user templates.
-- Nathaniel:
-
+- Nathaniel: - Implemented role-based access control (RBAC) to restrict create, edit, and delete actions to admin users only. Applied `role_required` across staff, customer, location, and rental routes. 
 ## Instructions for Installing Dependencies
 - Install dependencies: `pip install -r requirements.txt`
 - Start the app: `python3 main.py`
@@ -22,6 +21,12 @@ ___________________
 - After logging in, revisit those routes and confirm that create, edit, and delete pages load normally.
 - Open `http://127.0.0.1:5000/` to confirm the home page changes based on whether a user is logged in or logged out.
 
+### RBAC Testing
+- Log in as an admin user:
+  - Should be able to access create, edit, and delete routes
+- Log in as a regular user:
+  - Can view pages but cannot see Edit/Delete buttons
+  - If trying to access restricted routes (like /staff/create), user is redirected or denied access
 
 ## Notes for Instructor and TA
 - Phase 5 Member 2 work focuses on session management and route protection. The app uses Flask-Login to preserve logged-in state and applies `@login_required` to create, update, and delete routes across the main domains.
