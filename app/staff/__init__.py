@@ -5,6 +5,7 @@
 from flask import Blueprint
 from flask_login import login_required
 from .staff_controller import StaffController
+from ..auth.auth_tools import role_required
 
 bp = Blueprint('staff', __name__, url_prefix='/staff',
                static_folder='static', template_folder='templates')
@@ -16,11 +17,13 @@ def index():
 
 # Define the route for the staff detail page
 @bp.route("/<int:staff_id>")
+@login_required
 def detail(staff_id):
     return StaffController.detail(staff_id)
 
 # Define the route for the staff rentals page
 @bp.route("/<int:staff_id>/rentals")
+@login_required
 def rentals(staff_id):
     return StaffController.rentals(staff_id)
 
@@ -32,17 +35,20 @@ def search():
 # Define the route for the staff create page
 @bp.route("/create", methods=["GET", "POST"])
 @login_required
+@role_required("admin")
 def create():
     return StaffController.create()
 
 # Define the route for the staff edit page
 @bp.route("/<int:staff_id>/edit", methods=["GET", "POST"])
 @login_required
+@role_required("admin")
 def edit(staff_id):
     return StaffController.edit(staff_id)
 
 # Define the route for the staff delete page
 @bp.route("/<int:staff_id>/delete", methods=["GET", "POST"])
 @login_required
+@role_required("admin")
 def delete(staff_id):
     return StaffController.delete(staff_id)

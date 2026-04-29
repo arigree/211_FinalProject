@@ -17,7 +17,7 @@
                 </div>
 
                 <a class="home-link" href="/">Back to Home</a>
-                {% if current_user.is_authenticated %}
+                {% if current_user.is_authenticated and current_user.role == "admin" %}
                     <a href="{{ url_for('location.add_location') }}" class="btn-primary">Add Location</a>
                 {% endif %}
             </div>
@@ -59,7 +59,7 @@
                                 <td>{{ location.state }}</td>
                                 <td>{{ location.phone_number }}</td>
                                 <td>
-                                    {% if current_user.is_authenticated %}
+                                    {% if current_user.is_authenticated and current_user.role == "admin" %}
                                         <a href="{{ url_for('location.edit_location', location_id=location.location_id) }}" class="btn-primary2">Edit</a>
                                         <a href="{{ url_for('location.confirm_delete_location', location_id=location.location_id) }}" class="btn-danger">Delete</a>
                                     {% else %}

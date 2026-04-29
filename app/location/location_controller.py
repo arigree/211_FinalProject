@@ -9,6 +9,7 @@ from flask_login import login_required
 from .location_exceptions import LocationDataError
 from .location_manager import LocationManager
 from. locations import Location
+from ..auth.auth_tools import role_required
 
 # Blueprint groups all location-related routes together
 location_bp = Blueprint(
@@ -51,6 +52,7 @@ def search():
 
 @location_bp.route("/locations/add", methods=["GET", "POST"])
 @login_required
+@role_required("admin")
 def add_location():
     """
       Handles creation of a new location.
@@ -97,6 +99,7 @@ def add_location():
 
 @location_bp.route("/locations/edit/<int:location_id>", methods=["GET", "POST"])
 @login_required
+@role_required("admin")
 def edit_location(location_id):
     """
        Updates an existing location.
@@ -143,6 +146,7 @@ def edit_location(location_id):
 
 @location_bp.route("/locations/delete/<int:location_id>", methods=["GET"])
 @login_required
+@role_required("admin")
 def confirm_delete_location(location_id):
     """
     Displays a confirmation page before deleting a location.
@@ -156,6 +160,7 @@ def confirm_delete_location(location_id):
 
 @location_bp.route("/locations/delete/<int:location_id>", methods=["POST"])
 @login_required
+@role_required("admin")
 def delete_location_route(location_id):
     """
     Deletes the location after confirmation.

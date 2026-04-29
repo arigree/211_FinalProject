@@ -17,7 +17,7 @@
                 </div>
 
                 <a class="home-link" href="/">Back to Home</a>
-                {% if current_user.is_authenticated %}
+                {% if current_user.is_authenticated and current_user.role == "admin" %}
                     <a href="{{ url_for('rental.add_rental') }}" class="btn-primary">Add Rental</a>
                 {% endif %}
             </div>
@@ -71,7 +71,7 @@
                                 <td>{{ rental.rental_status }}</td>
                                 <td>{{ rental.total_cost }}</td>
                                 <td>
-                                    {% if current_user.is_authenticated %}
+                                    {% if current_user.is_authenticated and current_user.role == "admin" %}
                                         <a href="{{ url_for('rental.edit_rental', rental_id=rental.rental_id) }}" class="btn-primary2">Edit</a>
                                         <a href="{{ url_for('rental.confirm_delete_rental', rental_id=rental.rental_id) }}" class="btn-danger">Delete</a>
                                     {% else %}

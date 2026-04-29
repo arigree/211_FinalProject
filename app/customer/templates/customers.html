@@ -27,7 +27,7 @@
                 <p class="message success">{{ status_message }}</p>
             {% endif %}
 
-            {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated and current_user.role == "admin" %}
                 <div class="top-actions">
                     <a class="primary-link" href="{{ url_for('customer.show_create_customer_form') }}">Create Customer</a>
                 </div>
@@ -112,7 +112,7 @@
                                 <td>{{ customer.driver_license_number }}</td>
                                 <td>{{ customer.address }}</td>
                                 <td>
-                                    {% if current_user.is_authenticated %}
+                                    {% if current_user.is_authenticated and current_user.role == "admin" %}
                                         <div class="row-actions">
                                             <a class="action-link" href="{{ url_for('customer.show_edit_customer_form', customer_id=customer.customer_id) }}">Edit</a>
                                             <a class="action-link action-link-danger" href="{{ url_for('customer.show_delete_customer', customer_id=customer.customer_id) }}">Delete</a>

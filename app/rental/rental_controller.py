@@ -12,6 +12,7 @@ from .rental import Rental
 from app.customer.customer import Customer
 from app.staff.staff import Staff
 from .vehicle import Vehicle
+from ..auth.auth_tools import role_required
 
 # Blueprint setup
 rental_bp = Blueprint(
@@ -51,6 +52,7 @@ def search():
 
 @rental_bp.route("/rental/add", methods=["GET", "POST"])
 @login_required
+@role_required("admin")
 def add_rental():
     """
     Handles creation of a rental.
@@ -126,6 +128,7 @@ def add_rental():
 
 @rental_bp.route("/rental/edit/<int:rental_id>", methods=["GET", "POST"])
 @login_required
+@role_required("admin")
 def edit_rental(rental_id):
     from flask import redirect, url_for
 
@@ -197,6 +200,7 @@ def edit_rental(rental_id):
 
 @rental_bp.route("/rental/delete/<int:rental_id>", methods=["GET"])
 @login_required
+@role_required("admin")
 def confirm_delete_rental(rental_id):
     rental = Rental.query.get_or_404(rental_id)
     return render_template("rental_delete.html", rental=rental)
@@ -204,6 +208,7 @@ def confirm_delete_rental(rental_id):
 
 @rental_bp.route("/rental/delete/<int:rental_id>", methods=["POST"])
 @login_required
+@role_required("admin")
 def delete_rental_route(rental_id):
     from flask import redirect, url_for
 

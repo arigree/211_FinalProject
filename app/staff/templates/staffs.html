@@ -27,7 +27,7 @@
                 <p class="message success">{{ status_message }}</p>
             {% endif %}
 
-            {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated and current_user.role == "admin" %}
                 <div class="top-actions">
                     <a class="primary-link" href="{{ url_for('staff.create') }}">Create Staff</a>
                 </div>
@@ -78,7 +78,7 @@
                                 <td>
                                     <div class="row-actions">
                                         <a class="action-link" href="{{ url_for('staff.detail', staff_id=staff.staff_id) }}">Details</a>
-                                        {% if current_user.is_authenticated %}
+                                        {% if current_user.is_authenticated and current_user.role == "admin" %}
                                             <a class="action-link" href="{{ url_for('staff.edit', staff_id=staff.staff_id) }}">Edit</a>
                                             <a class="action-link action-link-danger" href="{{ url_for('staff.delete', staff_id=staff.staff_id) }}">Delete</a>
                                         {% endif %}

@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import login_required
+from ..auth.auth_tools import role_required
 
 from .customer_exceptions import (
     CustomerDataError,
@@ -9,6 +10,7 @@ from .customer_exceptions import (
 )
 from .customer_manager import CustomerManager
 
+# Create a blueprint for customer-related routes
 customer_bp = Blueprint(
     "customer",
     __name__,
@@ -17,7 +19,7 @@ customer_bp = Blueprint(
     static_url_path="/customer-static",
 )
 
-
+# Function to get current filters from request args
 def get_current_filters():
     return {
         "city": request.args.get("city", ""),
@@ -27,7 +29,7 @@ def get_current_filters():
         "limit": request.args.get("limit", ""),
     }
 
-
+# Function to get customer form data from request form
 def get_customer_form_data():
     return {
         "first_name": request.form.get("first_name", ""),
@@ -38,7 +40,7 @@ def get_customer_form_data():
         "address": request.form.get("address", ""),
     }
 
-
+# Function to render customer form template
 def render_customer_form(template_title, submit_label, form_action, customer_data, error_message=None):
     return render_template(
         "customer_form.html",
@@ -49,7 +51,7 @@ def render_customer_form(template_title, submit_label, form_action, customer_dat
         error_message=error_message,
     )
 
-
+# Route to show list of customers
 @customer_bp.route("/customers")
 def show_customers():
     customers = CustomerManager.get_filtered_customers(**get_current_filters())
@@ -61,9 +63,11 @@ def show_customers():
         current_filters=get_current_filters(),
     )
 
+# Route to show create customer form
 
 @customer_bp.route("/customers/create", methods=["GET"])
 @login_required
+@role_required("admin")
 def show_create_customer_form():
     return render_customer_form(
         template_title="Create Customer",
@@ -79,9 +83,10 @@ def show_create_customer_form():
         },
     )
 
-
+# Route to create a new customer record
 @customer_bp.route("/customers/create", methods=["POST"])
 @login_required
+@role_required("admin")
 def create_customer_record():
     customer_data = get_customer_form_data()
 
@@ -98,9 +103,10 @@ def create_customer_record():
 
     return redirect(url_for("customer.show_customers", message="Customer created successfully."))
 
-
+# Route to show edit customer form
 @customer_bp.route("/customers/<int:customer_id>/edit", methods=["GET"])
 @login_required
+@role_required("admin")
 def show_edit_customer_form(customer_id):
     customer = CustomerManager.get_customer_by_id(customer_id)
     return render_customer_form(
@@ -117,9 +123,10 @@ def show_edit_customer_form(customer_id):
         },
     )
 
-
+# Route to update an existing customer record
 @customer_bp.route("/customers/<int:customer_id>/edit", methods=["POST"])
 @login_required
+@role_required("admin")
 def update_customer_record(customer_id):
     customer_data = get_customer_form_data()
 
@@ -138,9 +145,10 @@ def update_customer_record(customer_id):
 
     return redirect(url_for("customer.show_customers", message="Customer updated successfully."))
 
-
+# Route to show delete customer confirmation form
 @customer_bp.route("/customers/<int:customer_id>/delete", methods=["GET"])
 @login_required
+@role_required("admin")
 def show_delete_customer(customer_id):
     customer = CustomerManager.get_customer_by_id(customer_id)
     return render_template(
@@ -149,9 +157,10 @@ def show_delete_customer(customer_id):
         error_message=None,
     )
 
-
+# Route to delete an existing customer record
 @customer_bp.route("/customers/<int:customer_id>/delete", methods=["POST"])
 @login_required
+@role_required("admin")
 def delete_customer_record(customer_id):
     customer = CustomerManager.get_customer_by_id(customer_id)
 
@@ -166,7 +175,7 @@ def delete_customer_record(customer_id):
 
     return redirect(url_for("customer.show_customers", message="Customer deleted successfully."))
 
-
+# Error handlers for customer-related exceptions
 @customer_bp.errorhandler(CustomerQueryError)
 def handle_customer_query_error(error):
     return render_template(
@@ -177,7 +186,7 @@ def handle_customer_query_error(error):
         current_filters=get_current_filters(),
     ), 400
 
-
+# Error handler for customer not found error
 @customer_bp.errorhandler(CustomerNotFoundError)
 def handle_customer_not_found(error):
     return render_template(
@@ -188,7 +197,7 @@ def handle_customer_not_found(error):
         current_filters=get_current_filters(),
     ), 404
 
-
+# Error handler for customer data error
 @customer_bp.errorhandler(CustomerDataError)
 def handle_customer_data_error(error):
     return render_template(
@@ -199,7 +208,7 @@ def handle_customer_data_error(error):
         current_filters=get_current_filters(),
     ), 500
 
-
+# Error handler for unexpected errors
 @customer_bp.errorhandler(Exception)
 def handle_customer_unexpected_error(error):
     return render_template(
