@@ -29,7 +29,7 @@ class AuthController:
                 message = "You are now registered!"
                 return redirect(
                     url_for(
-                        "user.profile",
+                        "home",
                         user_id=result.user_id,
                         css_class="success",
                         message=message,
