@@ -57,7 +57,7 @@ class AuthController:
                 return redirect(
                     next_page
                     or url_for(
-                        "user.profile",
+                        "home",
                         user_id=user.user_id,
                         css_class="success",
                         message=message,
@@ -80,6 +80,6 @@ class AuthController:
         if request.method == "POST":
             logout_user()
             message = "Thank you for your visit, you are now logged out!"
-            return redirect(url_for("user.index", css_class="success", message=message))
+            return redirect(url_for("home", css_class="success", message=message))
 
         return render_template("auth/logout.html")
