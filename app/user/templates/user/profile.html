@@ -3,30 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('user.static', filename='user.css') }}">
+
 </head>
 <body>
-<h2>My Profile</h2>
+<main class="page">
+    <section class="card">
+    <div class="header">
+        <div>
+            <p class="eyebrow">Car Rental System</p>
+            <h1>My Profile</h1>
+            <p class="subtitle">View your account details.</p>
+        </div>
+
+        <a class="home-link" href="/">Back to Home</a>
+    </div>
+
     {% if user is not none %}
+
         {% set profile = {
-            "Fullname": user.fullname,
+            "Full Name": user.fullname,
             "Username": user.username,
             "Email": user.email,
-            "Password": "******",
+            "Password": "••••••",
             "User Role": user.role,
             "Date Created": user.date_created.strftime("%m/%d/%Y")
         } %}
-        <div id="user-profile-container">
+
+        <div class="profile-grid">
             {% for header, value in profile.items() %}
-                <div class="user-tile">
-
-                    <div class="middle">
-                        <h3>{{ header }}</h3>
-                        <div>{{ value }}</div>
-                    </div>
-
+                <div class="profile-card">
+                    <h3>{{ header }}</h3>
+                    <p>{{ value }}</p>
                 </div>
             {% endfor %}
         </div>
+
     {% endif %}
+
+</section>
+</main>
 </body>
 </html>
